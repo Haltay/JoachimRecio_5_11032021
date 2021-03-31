@@ -1,0 +1,46 @@
+body {
+  font-family: "varela", sans-serif;
+}
+
+.container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  padding: 0;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.container .cardTeddy {
+  margin: 2%;
+  padding: 0;
+  border: black 1px solid;
+  border-radius: 4%;
+  overflow: hidden;
+}
+
+.container .cardTeddy .imageours {
+  height: 220px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.container .cardTeddy .card-body {
+  background: orange;
+}
+
+.container .cardTeddy .card-body .nameours {
+  text-align: center;
+}
+
+.container .cardTeddy .card-body .priceours {
+  font-size: 0.95em;
+}
+
+.container .cardTeddy .card-body .btnadoptemoi {
+  background-color: #fd3f92;
+}
+/*# sourceMappingURL=style.css.map */

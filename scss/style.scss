@@ -1,0 +1,50 @@
+// // Police
+// @font-face {
+//     font-family: 'varelaregular';
+//     src: url('fonts/varela/varela-regular-webfont.woff2') format('woff2'),
+//          url('fonts/varela/varela-regular-webfont.woff') format('woff');
+//     font-weight: normal;
+//     font-style: normal;
+// }
+
+body {
+    font-family: "varela", sans-serif;
+}
+
+.container  {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+    justify-content: center;
+
+    .cardTeddy {
+        margin: 2%;
+        padding: 0;
+        border: black 1px solid;
+        border-radius: 4%;
+        overflow: hidden; 
+        
+        .imageours {
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .card-body {
+            background: orange;    
+
+            .nameours {
+                text-align: center;
+            }
+
+            .priceours {
+                font-size: 0.95em;
+            }
+
+            .btnadoptemoi {
+                background-color: #fd3f92;
+            }
+        }
+    }
+}
+
+
