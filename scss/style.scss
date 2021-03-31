@@ -47,4 +47,14 @@ body {
     }
 }
 
+.panier {
+    display: flex;    
+    padding: 0;   
+    flex-wrap: wrap;
+    justify-content: center;  
 
+    .panier-teddy {
+        flex-direction: row;
+        align-items: center;
+    }
+} 

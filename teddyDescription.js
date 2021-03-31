@@ -23,42 +23,6 @@ const getTeddy = (callback) => {
 
 const containerDetails = document.querySelector(".containerTeddy");
 
-// getTeddy((err, data) => {
-//     if(err){
-//         console.log(err);
-//     }else{
-//         // afficher les infos du Teddy                 
-//         const contentDetails = `
-//         <div class="col-5 card cardTeddyDetails">
-//             <img class="card-img-top imageoursDetails" src="${data.imageUrl}" alt="${data.name}">
-//             <div class="card-body">
-//                 <h4 class="card-title nameourDetails">Salut, moi c'est<br><b>${data.name}</b></h4>
-//                 <p class="card-text descriptionoursDetails"><center>J'attends que tu m'adoptes.</center><font size="2.5em">${data.description}</font></p>
-//                 <p class="card-text priceoursDetails">A présent, il ne te reste plus qu'à <b>payer les frais de dossier</b> (${data.price} euros) et <b>choisir dans quelle couleur tu veux que je vienne</b>.</p>
-//                 <div class="btn-toolbar" id="selectChoice" role="toolbar" aria-label="Toolbar with buttons">
-//                     <div class="btn-2 colorTeddy" role="group" aria-label="First group" style="background-color:${data.colors[0]}">
-//                     <button type="button" class="btn colorTeddyChoice">${data.colors[0]}</button>
-//                     </div>
-//                     <div class="btn-2 colorTeddy" role="group" aria-label="Second group" style="background-color:${data.colors[1]}">
-//                     <button type="button" class="btn colorTeddyChoice">${data.colors[1]}</button>
-//                     </div>
-//                     <div class="btn-2 colorTeddy" role="group" aria-label="Third group" style="background-color:${data.colors[2]}">
-//                     <button type="button" class="btn colorTeddyChoice">${data.colors[2]}</button>
-//                     </div>
-//                     <div class="btn-2 colorTeddy" role="group" aria-label="Fourst group" style="background-color:${data.colors[3]}">
-//                     <button type="button" class="btn colorTeddyChoice" >${data.colors[3]}</button>
-//                     </div>
-//                 </div>
-//                 <button class="btn btn-lg btn-block addCart">J'arrive chez toi</button>
-//             </div>
-//         </div>`;
-
-//         containerDetails.innerHTML = contentDetails;          
-//         };
-//     }
-// );
-
-
 
 getTeddy((err, data) => {
     if(err){
@@ -136,28 +100,31 @@ let cartItem = JSON.parse(localStorage.getItem("product"));
 
 // Pop Up
 const confirmationPopup = () => {
-    if(window.confirm(`${data.name} arrive bientôt chez vous 
-    Consulter le panier avec OK ou revenir à l'accueil avec ANNULER`)){
+    if(window.confirm(`    ${data.name} arrive bientôt chez vous
+    Confirmer le panier avec OK ou revenir à l'accueil avec ANNULER`)){
         window.location.href = "panier.html";
     }else{
         window.location.href = "index.html";
     }
 }
 
-//si il y a des produits dans le localStorage
-if (cartItem) {
+
+// fonction ajouter un produit dans le Local Storage
+const ajoutLocalStorage = () => {
     cartItem.push(optionsProduit);    
     localStorage.setItem("product", JSON.stringify(cartItem));
-    confirmationPopup();
+};
 
+//si il y a des produits dans le localStorage
+if (cartItem) {
+    ajoutLocalStorage();
+    confirmationPopup();
 }
 // si il n'y a pas de produit dans le localStorage
 else{
     cartItem = [];
-    cartItem.push(optionsProduit);    
-    localStorage.setItem("product", JSON.stringify(cartItem));
+    ajoutLocalStorage();
     confirmationPopup();
-
 }
     });
     }
