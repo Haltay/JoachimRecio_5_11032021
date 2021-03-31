@@ -59,6 +59,37 @@ for (let j = 0; j < btn_delete.length; j++){
 
 }
 
+// bouton pour vider le panier
+const btn_delete_basket_html = `
+<div class="text-center">
+    <button type="button" class="btn btn-primary btn-lg col-8 btn-delete-basket"> Si tu as changé d'avis </button>
+</div>
+`;
+panierItem.insertAdjacentHTML("afterend", btn_delete_basket_html);
+
+const btn_delete_basket = document.querySelector(".btn-delete-basket");
+
+// suprression de la key product du local storage
+btn_delete_basket.addEventListener("click", (e) => {
+    e.preventDefault;
+
+    localStorage.removeItem("product");
+
+// message d'alerte
+    alert(" Votre panier est tout léger sans Teddy ");
+    window.location.href = "panier.html";
+})
+
+
+
+
+
+
+
+
+
+
+
 
 
 
