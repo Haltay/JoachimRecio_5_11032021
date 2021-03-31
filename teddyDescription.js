@@ -97,7 +97,7 @@ getTeddy((err, data) => {
             
         choiceColor.innerHTML += teddyColor;  
 
-        });         
+        });  
     }
 });
 
@@ -110,9 +110,6 @@ getTeddy((err, data) => {
     if(err){
         console.log(err);
     }else{ 
-
-
-
         const cartBtn = document.querySelector(".addCart");
 
         cartBtn.addEventListener('click', (event) => {
@@ -128,13 +125,44 @@ getTeddy((err, data) => {
             image: data.imageUrl,
             description: data.description,
             quantite: 1,
-            couleur: choixColor, // probleme ne change pas de couleur toujours la 1ere
+            couleur: choixColor,
         }
 console.log(optionsProduit);
-        });
 
+// ---------------------------LOCAL STORAGE-----------------------
+
+// Stocker la récuperation des valeurs dans le localStorage
+let cartItem = JSON.parse(localStorage.getItem("product"));
+
+// Pop Up
+const confirmationPopup = () => {
+    if(window.confirm(`${data.name} arrive bientôt chez vous 
+    Consulter le panier avec OK ou revenir à l'accueil avec ANNULER`)){
+        window.location.href = "panier.html";
+    }else{
+        window.location.href = "index.html";
+    }
+}
+
+//si il y a des produits dans le localStorage
+if (cartItem) {
+    cartItem.push(optionsProduit);    
+    localStorage.setItem("product", JSON.stringify(cartItem));
+    confirmationPopup();
+
+}
+// si il n'y a pas de produit dans le localStorage
+else{
+    cartItem = [];
+    cartItem.push(optionsProduit);    
+    localStorage.setItem("product", JSON.stringify(cartItem));
+    confirmationPopup();
+
+}
+    });
     }
 });
+
 
 
 
@@ -154,14 +182,8 @@ console.log(optionsProduit);
 //         };
 
 
-        
-        
-
-         
  
-
 // // Stocker la récuperation des valeurs dans le localStorage
-// let cartItem = JSON.parse(localStorage.getItem("product"));
 // let saveItemCart = {
 //     id: data._id,
 //     nom: data.name,
