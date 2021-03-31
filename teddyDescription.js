@@ -83,7 +83,7 @@ getTeddy((err, data) => {
         const choixColor = idForm.value;
 
         let optionsProduit = {
-            id_teddy_: data._id,
+            id_product: data._id,
             nom: data.name,
             price: data.price,
             image: data.imageUrl,

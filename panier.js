@@ -7,7 +7,7 @@ const panierItem = document.querySelector(".panier");
 let containerPanier = [];
 
 // si le panier est vide
-if(cartItem === null) {
+if(cartItem === null || cartItem == 0) {
     const panierVide = `
         <div class="panier_vide">
             <div> Oh non, tu n'as choisi aucun Teddy</div>
@@ -16,9 +16,7 @@ if(cartItem === null) {
     panierItem.innerHTML = panierVide;
     console.log("snif snif");
 } else{
-    // si le panier n'est pas vide
-    
-
+    // si le panier n'est pas vide  
     for(i = 0; i < cartItem.length; i++ ){
         containerPanier = containerPanier + `
         
@@ -39,21 +37,25 @@ if(cartItem === null) {
 // Bouton "Supprimer l'article"
 let btn_delete = document.querySelectorAll(".btn-supprimer");
 
+
 for (let j = 0; j < btn_delete.length; j++){
     btn_delete[j].addEventListener("click", (event) =>{
         event.preventDefault();
 
         // selection de l'article à enlever
-        let id_a_supprimer = cartItem[j].id;
-        console.log("a supprimer");
-
+        let id_to_delete = cartItem[j].id_product;
+        
+        // supprimer avec la methode filter
+        cartItem = cartItem.filter( element => element.id_product !== id_to_delete); 
         console.log(cartItem);
 
-        // supprimer avec la methode filter
-        // cartItem = cartItem.filter( Element => Element.id !== id); 
-        
+        // envoie de la variable dans le local storage pour le modifier
+        localStorage.setItem("product", JSON.stringify(cartItem));
 
-    })
+        //Avertir de la suppression du produit
+        alert("Votre Teddy est retourné à la boutique");
+        window.location.href = "panier.html";
+    });
 
 }
 
