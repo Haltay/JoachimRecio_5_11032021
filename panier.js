@@ -7,7 +7,7 @@ const panierItem = document.querySelector(".panier");
 let containerPanier = [];
 
 // si le panier est vide
-if(cartItem === null || cartItem == 0) {
+if (cartItem === null || cartItem == 0) {
     const panierVide = `
         <div class="panier_vide">
             <div> Oh non, tu n'as choisi aucun Teddy</div>
@@ -15,9 +15,9 @@ if(cartItem === null || cartItem == 0) {
     `;
     panierItem.innerHTML = panierVide;
     console.log("snif snif");
-} else{
+} else {
     // si le panier n'est pas vide  
-    for(i = 0; i < cartItem.length; i++ ){
+    for (i = 0; i < cartItem.length; i++) {
         containerPanier = containerPanier + `
         
         <div class="card col-8 panier-teddy">            
@@ -29,24 +29,24 @@ if(cartItem === null || cartItem == 0) {
         </div>        
         `;
     }
-        if(i === cartItem.length){
+    if (i === cartItem.length) {
         panierItem.innerHTML = containerPanier;
-        }    
+    }
 }
 
 // Bouton "Supprimer l'article"
 let btn_delete = document.querySelectorAll(".btn-supprimer");
 
 
-for (let j = 0; j < btn_delete.length; j++){
-    btn_delete[j].addEventListener("click", (event) =>{
+for (let j = 0; j < btn_delete.length; j++) {
+    btn_delete[j].addEventListener("click", (event) => {
         event.preventDefault();
 
         // selection de l'article à enlever
         let id_to_delete = cartItem[j].id_product;
-        
+
         // supprimer avec la methode filter
-        cartItem = cartItem.filter( element => element.id_product !== id_to_delete); 
+        cartItem = cartItem.filter(element => element.id_product !== id_to_delete);
         console.log(cartItem);
 
         // envoie de la variable dans le local storage pour le modifier
@@ -75,7 +75,7 @@ btn_delete_basket.addEventListener("click", (e) => {
 
     localStorage.removeItem("product");
 
-// message d'alerte
+    // message d'alerte
     alert(" Votre panier est tout léger sans Teddy ");
     window.location.href = "panier.html";
 });
@@ -111,7 +111,7 @@ const affiherFormulaireHtml = () => {
     const FormulaireCommande = document.querySelector(".formulaire");
 
     const structureFormulaire = `
-    <div class="col-md-8 order-md-1">
+    <div class="col-md-6 order-md-1">
         <h4 class="mb-3">Adresse de facturation</h4>
         <form class="needs-validation" novalidate>
             <div class="row">
@@ -245,7 +245,7 @@ const affiherFormulaireHtml = () => {
     FormulaireCommande.insertAdjacentHTML("afterend", structureFormulaire);
 };
 
-affiherFormulaireHtml ();
+affiherFormulaireHtml();
 
 
 // Récuperation des données du formulaire (hors carte crédit) pour local storage
@@ -253,64 +253,81 @@ affiherFormulaireHtml ();
 const btnCheckout = document.querySelector("#envoyer-formulaire");
 
 btnCheckout.addEventListener("click", (e) => {
-e.preventDefault();
+    e.preventDefault();
 
-const formulaireValues = {
-    prenom: document.querySelector("#prenom").value,
-    nom: document.querySelector("#nom").value,
-    email: document.querySelector("#email").value,
-    adresse: document.querySelector("#adresse").value,
-    adresse2: document.querySelector("#adresse2").value,
-    pays: document.querySelector("#pays").value,
-    codePostal:document.querySelector("#code-postal").value,
-}
-
-//---------------- Verifier que les valeurs du formulaire sont bonnes----------------
-const textAlert = (value) => {
-return `Pour votre ${value} les symboles et chiffres ne sont pas autorisés \n Merci de le refaire `
-};
-
-const regExPrenomNomVille = (value) => {
-return /^[a-zA-Z]{1}[a-zA-Z -]*$/.test(value);
-};
-
-function prenomControl(){
-// controle des données prénom
-    const lePrenom = formulaireValues.prenom;
-    if(regExPrenomNomVille(lePrenom)){
-        return true;
-    } else {
-        alert(textAlert ("prénom"));
-        return false;
+    const formulaireValues = {
+        prenom: document.querySelector("#prenom").value,
+        nom: document.querySelector("#nom").value,
+        email: document.querySelector("#email").value,
+        adresse: document.querySelector("#adresse").value,
+        adresse2: document.querySelector("#adresse2").value,
+        pays: document.querySelector("#pays").value,
+        codePostal: document.querySelector("#code-postal").value,
     }
-};
 
-function nomControl(){
-    // controle des données nom
+    //---------------- Verifier que les valeurs du formulaire sont bonnes----------------
+    const textAlert = (value) => {
+        return ` Pour votre ${value} les symboles et chiffres ne sont pas autorisés \n Merci de le refaire `
+    };
+
+    const regExPrenomNomVille = (value) => {
+        return /^[a-zA-Z]{1}[a-zA-Z -]*$/.test(value);
+    };
+    const regExCodePostal = (value) => {
+        return /^[0-9]{5}(-[0-9]{4})?|(([gG][iI][rR] {0,}0[aA]{2})|((([a-pr-uwyzA-PR-UWYZ][a-hk-yA-HK-Y]?[0-9][0-9]?)|(([a-pr-uwyzA-PR-UWYZ][0-9][a-hjkstuwA-HJKSTUW])|([a-pr-uwyzA-PR-UWYZ][a-hk-yA-HK-Y][0-9][abehmnprv-yABEHMNPRV-Y]))) {0,}[0-9][abd-hjlnp-uw-zABD-HJLNP-UW-Z]{2}))$/.test(value);
+    };
+
+
+    function prenomControl() {
+        // controle des données prénom
+        const lePrenom = formulaireValues.prenom;
+        if (regExPrenomNomVille(lePrenom)) {
+            return true;
+        } else {
+            alert(textAlert("prénom"));
+            return false;
+        }
+    };
+
+    function nomControl() {
+        // controle des données nom
         const leNom = formulaireValues.nom;
-    if(regExPrenomNomVille(leNom)){
-        return true;
+        if (regExPrenomNomVille(leNom)) {
+            return true;
+        } else {
+            alert(textAlert("nom"));
+            return false;
+        }
+    };
+
+    function codePostalControl() {
+        // controle des données code postal
+        const leCodePostal = formulaireValues.codePostal;
+        if (regExCodePostal(leCodePostal)) {
+            return true;
+        } else {
+            alert("Le code postal n'est pas valide, merci de réessayer");
+            return false;
+        }
+    };
+
+    // controle de la validité du formulaire 
+    if (prenomControl() && nomControl() && codePostalControl()) {
+        // envoi dans le local storage des données du formulaire
+        localStorage.setItem("formulaireValues", JSON.stringify(formulaireValues));
     } else {
-        alert(textAlert ("nom"));
-        return false;
+        alert("Le formulaire n'est pas rempli correctement");
     }
-};
-
-if(prenomControl() && nomControl() ) {
-    // envoi dans le local storage des données du formulaire
-localStorage.setItem("formulaireValues", JSON.stringify(formulaireValues));
-} else {
-    alert("Le formulaire n'est pas rempli correctement");
-}
 
 
-// Pour envoyer au serveur
-const aEnvoyerServeur = {
-    cartItem,
-    formulaireValues,
-}
+
+
+    // Pour envoyer au serveur
+    const aEnvoyerServeur = {
+        cartItem,
+        formulaireValues,
+    }
 });
-
 
 //------------ Garder les valeurs du formulaires dans les champs via le local storage--------
 const dataLocalStorage = localStorage.getItem("formulaireValues");
