@@ -36,7 +36,7 @@ getTeddy((err, data) => {
             <div class="card-body">
                 <h4 class="card-title nameourDetails">Salut, moi c'est<br><b>${data.name}</b></h4>
                 <p class="card-text descriptionoursDetails"><center>J'attends que tu m'adoptes.</center><font size="2.5em">${data.description}</font></p>
-                <p class="card-text priceoursDetails">A présent, il ne te reste plus qu'à <b>payer les frais de dossier</b> (${data.price} euros) et <b>choisir dans quelle couleur tu veux que je vienne</b>.</p>
+                <p class="card-text priceoursDetails">A présent, il ne te reste plus qu'à <b>payer les frais de dossier</b> (${data.price / 100} euros) et <b>choisir dans quelle couleur tu veux que je vienne</b>.</p>
                 
                 <label for="exampleFormControlSelect2">Choisi moi comme tu m'aimes</label>
                 <select class="form-control colorsTeddy" id="couleur_Produit">

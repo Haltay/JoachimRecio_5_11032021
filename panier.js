@@ -24,7 +24,7 @@ if(cartItem === null || cartItem == 0) {
                 <img class="card-img-top col-4 image-panier-teddy" src="${cartItem[i].image}" alt="Card image cap">            
             <div class="card-body">
                 <h4 class="card-title">Quantité 1 - ${cartItem[i].nom} de couleur ${cartItem[i].couleur}</h4>
-                <p class="card-text">Pour seulement ${cartItem[i].price} € - <a href="#" class="btn btn-primary btn-supprimer"> Supprimer le Teddy </a> </p>
+                <p class="card-text">Pour seulement ${cartItem[i].price / 100} € - <a href="#" class="btn btn-primary btn-supprimer"> Supprimer le Teddy </a> </p>
             </div>
         </div>        
         `;
@@ -62,7 +62,7 @@ for (let j = 0; j < btn_delete.length; j++){
 // bouton pour vider le panier
 const btn_delete_basket_html = `
 <div class="text-center">
-    <button type="button" class="btn btn-primary btn-lg col-8 btn-delete-basket"> Si tu as changé d'avis </button>
+    <button type="button" class="btn btn-primary btn-lg col-8 btn-delete-basket"> Si tu as changé d'avis et que tu ne veux plus aucun Teddy </button>
 </div>
 `;
 panierItem.insertAdjacentHTML("afterend", btn_delete_basket_html);
@@ -71,20 +71,40 @@ const btn_delete_basket = document.querySelector(".btn-delete-basket");
 
 // suprression de la key product du local storage
 btn_delete_basket.addEventListener("click", (e) => {
-    e.preventDefault;
+    e.preventDefault();
 
     localStorage.removeItem("product");
 
 // message d'alerte
     alert(" Votre panier est tout léger sans Teddy ");
     window.location.href = "panier.html";
-})
+});
 
 
+// ------------------------------ TOTAL PANIER ---------------------------
+// Montant Total du panier
+const prixTotalPanier = [];
+
+for (let k = 0; k < cartItem.length; k++) {
+    let prixProduitPanier = cartItem[k].price / 100;
+
+    prixTotalPanier.push(prixProduitPanier);
+}
+
+// additionner les prix de tout les article avec la methode "reduce"
+const reducer = (accumulator, currentValue) => accumulator + currentValue;
+const prixTotal = prixTotalPanier.reduce(reducer, 0);
+console.log(prixTotal);
+
+// Le code HTML du Total Panier
+const affichePrixPanier = `
+<div class="text-center justify-content-center affichage-prix-panier">Pour recevoir ta commande, les frais de dossier sont de ${prixTotal} € </div>
+`;
+
+panierItem.insertAdjacentHTML("afterend", affichePrixPanier);
 
 
-
-
+// ----------------------------- Formulaire de commande --------------------------
 
 
 

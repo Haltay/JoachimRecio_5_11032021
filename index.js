@@ -44,7 +44,7 @@ getTeddiesData((err, dataTeddies) => {
                 <div class="card-body">
                     <h4 class="card-title nameours">Salut, moi c'est<br><b>${element.name}</b></h4>
                     <p class="card-text descriptionours"><center>J'attends que tu m'adoptes.</center><font size="2.5em">${element.description}</font></p>
-                    <p class="card-text priceours">A présent, il ne te reste plus qu'à <b>payer les frais de dossier</b> (${element.price} euros) et <b>choisir dans quelle couleur tu veux que je vienne</b>.</p>
+                    <p class="card-text priceours">A présent, il ne te reste plus qu'à <b>payer les frais de dossier</b> (${element.price / 100} euros) et <b>choisir dans quelle couleur tu veux que je vienne</b>.</p>
                     <a href="teddyDescription.html?id=${element._id}" class="btn btn-lg btn-block btnadoptemoi">Adopte moi</a>
                 </div>
             </div>`;            
