@@ -255,33 +255,50 @@ const btnCheckout = document.querySelector("#envoyer-formulaire");
 btnCheckout.addEventListener("click", (e) => {
 e.preventDefault();
 
-localStorage.setItem("prenom", document.querySelector("#prenom").value);
-localStorage.setItem("nom", document.querySelector("#nom").value);
-localStorage.setItem("email", document.querySelector("#email").value);
-localStorage.setItem("adresse", document.querySelector("#adresse").value);
-localStorage.setItem("adresse2", document.querySelector("#adresse2").value);
-localStorage.setItem("pays", document.querySelector("#pays").value);
-localStorage.setItem("codePostal", document.querySelector("#code-postal").value);
-
-const formulaire = {
-    prenom: localStorage.getItem("prenom"),
-    nom: localStorage.getItem("nom"),
-    email: localStorage.getItem("email"),
-    adresse: localStorage.getItem("adresse"),
-    adresse2: localStorage.getItem("adresse2"),
-    pays: localStorage.getItem("pays"),
-    codePostal: localStorage.getItem("codePostal"),
+const formulaireValues = {
+    prenom: document.querySelector("#prenom").value,
+    nom: document.querySelector("#nom").value,
+    email: document.querySelector("#email").value,
+    adresse: document.querySelector("#adresse").value,
+    adresse2: document.querySelector("#adresse2").value,
+    pays: document.querySelector("#pays").value,
+    codePostal:document.querySelector("#code-postal").value,
 }
+
+localStorage.setItem("formulaireValues", JSON.stringify(formulaireValues));
 
 // Pour envoyer au serveur
 const aEnvoyerServeur = {
     cartItem,
-    formulaire,
+    formulaireValues,
 }
 
-// Envoie de "aEnvoyerServeur" vers le serveur
+});
+
+
+//------------ Garder les valeurs du formulaires dans les champs via le local storage--------
+const dataLocalStorage = localStorage.getItem("formulaireValues");
+const dataLocalStorageObject = JSON.parse(dataLocalStorage);
+
+// function remplirChampFormulaire (input){
+//     document.querySelector(`#${input}`).value = dataLocalStorageObject[input];
+// };
+// remplirChampFormulaire("prenom");
+// remplirChampFormulaire("nom");
+// remplirChampFormulaire("email");
+// remplirChampFormulaire("adresse");
+// remplirChampFormulaire("adresse2");
+// remplirChampFormulaire("pays");
+// remplirChampFormulaire("codePostal");
+
+document.querySelector("#prenom").value = dataLocalStorageObject.prenom;
+document.querySelector("#nom").value = dataLocalStorageObject.nom;
+document.querySelector("#email").value = dataLocalStorageObject.email;
+document.querySelector("#adresse").value = dataLocalStorageObject.adresse;
+document.querySelector("#adresse2").value = dataLocalStorageObject.adresse2;
+document.querySelector("#pays").value = dataLocalStorageObject.pays;
+document.querySelector("#code-postal").value = dataLocalStorageObject.codePostal;
 
 
 
-})
 
