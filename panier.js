@@ -265,14 +265,50 @@ const formulaireValues = {
     codePostal:document.querySelector("#code-postal").value,
 }
 
+//---------------- Verifier que les valeurs du formulaire sont bonnes----------------
+const textAlert = (value) => {
+return `Pour votre ${value} les symboles et chiffres ne sont pas autorisés \n Merci de le refaire `
+};
+
+const regExPrenomNomVille = (value) => {
+return /^[a-zA-Z]{1}[a-zA-Z -]*$/.test(value);
+};
+
+function prenomControl(){
+// controle des données prénom
+    const lePrenom = formulaireValues.prenom;
+    if(regExPrenomNomVille(lePrenom)){
+        return true;
+    } else {
+        alert(textAlert ("prénom"));
+        return false;
+    }
+};
+
+function nomControl(){
+    // controle des données nom
+        const leNom = formulaireValues.nom;
+    if(regExPrenomNomVille(leNom)){
+        return true;
+    } else {
+        alert(textAlert ("nom"));
+        return false;
+    }
+};
+
+if(prenomControl() && nomControl() ) {
+    // envoi dans le local storage des données du formulaire
 localStorage.setItem("formulaireValues", JSON.stringify(formulaireValues));
+} else {
+    alert("Le formulaire n'est pas rempli correctement");
+}
+
 
 // Pour envoyer au serveur
 const aEnvoyerServeur = {
     cartItem,
     formulaireValues,
 }
-
 });
 
 
