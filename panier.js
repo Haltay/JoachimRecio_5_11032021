@@ -275,10 +275,13 @@ btnCheckout.addEventListener("click", (e) => {
     const regExCodePostal = (value) => {
         return /^[0-9]{5}(-[0-9]{4})?|(([gG][iI][rR] {0,}0[aA]{2})|((([a-pr-uwyzA-PR-UWYZ][a-hk-yA-HK-Y]?[0-9][0-9]?)|(([a-pr-uwyzA-PR-UWYZ][0-9][a-hjkstuwA-HJKSTUW])|([a-pr-uwyzA-PR-UWYZ][a-hk-yA-HK-Y][0-9][abehmnprv-yABEHMNPRV-Y]))) {0,}[0-9][abd-hjlnp-uw-zABD-HJLNP-UW-Z]{2}))$/.test(value);
     };
-
     const regExEmail= (value) => {
         return /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(value);
     };
+    const regExAdresse = (value) => {
+        return /^[A-Za-z0-9\s]{5,50}$/.test(value);
+    };
+
 
     function prenomControl() {
         // controle des données prénom
@@ -324,21 +327,33 @@ btnCheckout.addEventListener("click", (e) => {
         }
     };
 
+    function AdresseControl() {
+        // controle des données de l'adresse
+        const lAdresse = formulaireValues.adresse;
+        if (regExAdresse(lAdresse)) {
+            return true;
+        } else {
+            alert("L'adresse n'est pas valide, merci de réessayer");
+            return false;
+        }
+    };
+
+
 
     // controle de la validité du formulaire 
-    if (prenomControl() && nomControl() && codePostalControl() && EmailControl() ) {
+    if (prenomControl() && nomControl() && codePostalControl() && EmailControl() && AdresseControl() ) {
         // envoi dans le local storage des données du formulaire
         localStorage.setItem("formulaireValues", JSON.stringify(formulaireValues));
     } else {
         alert("Le formulaire n'est pas rempli correctement");
-    }
+    };
 
 
     // Pour envoyer au serveur
     const aEnvoyerServeur = {
         cartItem,
         formulaireValues,
-    }
+    };
 });
 
 //------------ Garder les valeurs du formulaires dans les champs via le local storage--------
