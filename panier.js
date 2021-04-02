@@ -269,7 +269,6 @@ btnCheckout.addEventListener("click", (e) => {
     const textAlert = (value) => {
         return ` Pour votre ${value} les symboles et chiffres ne sont pas autorisés \n Merci de le refaire `
     };
-
     const regExPrenomNomVille = (value) => {
         return /^[a-zA-Z]{1}[a-zA-Z -]*$/.test(value);
     };
@@ -277,6 +276,9 @@ btnCheckout.addEventListener("click", (e) => {
         return /^[0-9]{5}(-[0-9]{4})?|(([gG][iI][rR] {0,}0[aA]{2})|((([a-pr-uwyzA-PR-UWYZ][a-hk-yA-HK-Y]?[0-9][0-9]?)|(([a-pr-uwyzA-PR-UWYZ][0-9][a-hjkstuwA-HJKSTUW])|([a-pr-uwyzA-PR-UWYZ][a-hk-yA-HK-Y][0-9][abehmnprv-yABEHMNPRV-Y]))) {0,}[0-9][abd-hjlnp-uw-zABD-HJLNP-UW-Z]{2}))$/.test(value);
     };
 
+    const regExEmail= (value) => {
+        return /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(value);
+    };
 
     function prenomControl() {
         // controle des données prénom
@@ -311,15 +313,25 @@ btnCheckout.addEventListener("click", (e) => {
         }
     };
 
+    function EmailControl() {
+        // controle des données de l'email
+        const lEmail = formulaireValues.email;
+        if (regExEmail(lEmail)) {
+            return true;
+        } else {
+            alert("L'email n'est pas valide, merci de réessayer");
+            return false;
+        }
+    };
+
+
     // controle de la validité du formulaire 
-    if (prenomControl() && nomControl() && codePostalControl()) {
+    if (prenomControl() && nomControl() && codePostalControl() && EmailControl() ) {
         // envoi dans le local storage des données du formulaire
         localStorage.setItem("formulaireValues", JSON.stringify(formulaireValues));
     } else {
         alert("Le formulaire n'est pas rempli correctement");
     }
-
-
 
 
     // Pour envoyer au serveur
