@@ -65,4 +65,9 @@ body {
       -ms-flex-align: center;
           align-items: center;
 }
+
+.infoChampManquant {
+  color: red;
+  background-color: yellow;
+}
 /*# sourceMappingURL=style.css.map */
