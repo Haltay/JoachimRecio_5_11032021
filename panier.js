@@ -20,7 +20,7 @@ if (cartItem === null || cartItem == 0) {
     for (i = 0; i < cartItem.length; i++) {
         containerPanier = containerPanier + `
         
-        <div class="card col-8 panier-teddy">            
+        <div class="card col-8 panier-teddy" style="border: 6px solid ${cartItem[i].couleur_background}; border-radius: 10px">            
                 <img class="card-img-top col-4 image-panier-teddy" src="${cartItem[i].image}" alt="Card image cap">            
             <div class="card-body">
                 <h4 class="card-title">Quantité 1 - ${cartItem[i].nom} de couleur ${cartItem[i].couleur}</h4>
@@ -176,18 +176,6 @@ const affiherFormulaireHtml = () => {
                 </div>          
             </div>
 
-            
-            <hr class="mb-4">
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="same-address">
-                    <label class="custom-control-label" for="same-address">L'adresse de livraison est la même que l'adresse de facturation</label>
-                </div>
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="save-info">
-                    <label class="custom-control-label" for="save-info">Sauvegarder mes infos pour la prochaine fois</label>
-                </div>
-            <hr class="mb-4">
-
             <h4 class="mb-3">Paiement</h4>
 
             <div class="d-block my-3">
@@ -238,7 +226,7 @@ const affiherFormulaireHtml = () => {
                 </div>
             </div>
             <hr class="mb-4">
-            <button class="btn btn-primary btn-lg btn-block" id="envoyer-formulaire" type="submit">Continue to checkout</button>
+            <button class="btn btn-primary btn-lg btn-block" id="envoyer-formulaire" type="submit">Confirmer la venue du ou des Teddy</button>
             </form>
         </div>
     </div>
@@ -349,7 +337,7 @@ btnCheckout.addEventListener("click", (e) => {
             return false;
         }
     };
-    
+
     function villeControl() {
         // controle des données ville
         const laVille = formulaireValues.ville;
@@ -362,10 +350,19 @@ btnCheckout.addEventListener("click", (e) => {
         }
     };
 
+// confirmation de la validation de la commande
+
+
     // controle de la validité du formulaire 
-    if (prenomControl() && nomControl() && codePostalControl() && EmailControl() && AdresseControl() && villeControl()) {
+    if (prenomControl() && nomControl() && codePostalControl() && EmailControl() && AdresseControl() && villeControl() &&
+        (window.confirm(`    Votre Teddy arrive bientôt chez vous.
+    Confirmer le panier avec OK ou annuler le avec ANNULER`)
+        )) {
+        // ------------ confirmer l'achat ------------        
         // envoi dans le local storage des données du formulaire
         localStorage.setItem("formulaireValues", JSON.stringify(formulaireValues));
+        //redirection
+        window.location.href = "confirmation.html";
     } else {
         alert("Le formulaire n'est pas rempli correctement");
     };

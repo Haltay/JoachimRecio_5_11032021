@@ -7,27 +7,26 @@ console.log(idTeddy);
 
 const getTeddy = (callback) => {
 
-    const request = new XMLHttpRequest() ;
-    request.open ('GET', 'http://localhost:3000/api/teddies/' + idTeddy) ;
+    const request = new XMLHttpRequest();
+    request.open('GET', 'http://localhost:3000/api/teddies/' + idTeddy);
     request.send();
 
     request.addEventListener('readystatechange', () => {
-        if(request.readyState === 4 && request.status === 200) {
-           const dataTeddy = JSON.parse(request.responseText)
-           callback(undefined, dataTeddy);
-        } else if(request.readyState === 4) {
-           callback('Oups les données sont inaccessibles', undefined);
+        if (request.readyState === 4 && request.status === 200) {
+            const dataTeddy = JSON.parse(request.responseText)
+            callback(undefined, dataTeddy);
+        } else if (request.readyState === 4) {
+            callback('Oups les données sont inaccessibles', undefined);
         }
     });
 }
 
 const containerDetails = document.querySelector(".containerTeddy");
 
-
 getTeddy((err, data) => {
-    if(err){
+    if (err) {
         console.log(err);
-    }else{       
+    } else {
 
         // afficher les infos du Teddy                 
         const contentDetails = `
@@ -46,22 +45,22 @@ getTeddy((err, data) => {
                 <button class="btn btn-lg btn-block addCart">Pour avoir bientôt ${data.name} </button>
             </div>
         </div>`;
-        
-        containerDetails.innerHTML = contentDetails; 
-        
+
+        containerDetails.innerHTML = contentDetails;
+
         const choiceColor = document.querySelector(".colorsTeddy");
 
         // TODO: Changer le Data (l.92) pour mettre nom couleur pour Arnold
         data.colors.forEach(data => {
-            (data == "Pale brown")? data="#964B00" : data ;     //pour Pale Brown
-            data = (data == "Dark brown")? "#654321" : data ;
-            const teddyColor =  `
+            (data == "Pale brown") ? data = "#964B00" : data;     //pour Pale Brown
+            data = (data == "Dark brown") ? "#654321" : data;
+            const teddyColor = `
             <option value="${data}" class="colorTeddy" style="background-color:${data}">${data}</option>
-            `;         
-            
-        choiceColor.innerHTML += teddyColor;  
+            `;
 
-        });  
+            choiceColor.innerHTML += teddyColor;
+
+        });
     }
 });
 
@@ -69,64 +68,67 @@ getTeddy((err, data) => {
 
 //LOCAL STORAGE  
 
-    // for button add cart "click"
+// for button add cart "click"
 getTeddy((err, data) => {
-    if(err){
+    if (err) {
         console.log(err);
-    }else{ 
+    } else {
         const cartBtn = document.querySelector(".addCart");
 
         cartBtn.addEventListener('click', (event) => {
-        event.preventDefault();
+            event.preventDefault();
 
-        const idForm = document.querySelector(".colorsTeddy");
-        const choixColor = idForm.value;
+            const idForm = document.querySelector(".colorsTeddy");
+            const choixColor = idForm.value;
 
-        let optionsProduit = {
-            id_product: data._id,
-            nom: data.name,
-            price: data.price,
-            image: data.imageUrl,
-            description: data.description,
-            quantite: 1,
-            couleur: choixColor,
-        }
-console.log(optionsProduit);
+            let optionsProduit = {
+                id_product: data._id,
+                nom: data.name,
+                price: data.price,
+                image: data.imageUrl,
+                description: data.description,
+                quantite: 1,
+                couleur: choixColor,
+                couleur_background: choixColor,
 
-// ---------------------------LOCAL STORAGE-----------------------
+                
+            }
+            console.log(optionsProduit);
 
-// Stocker la récuperation des valeurs dans le localStorage
-let cartItem = JSON.parse(localStorage.getItem("product"));
+            // ---------------------------LOCAL STORAGE-----------------------
 
-// Pop Up
-const confirmationPopup = () => {
-    if(window.confirm(`    ${data.name} arrive bientôt chez vous
-    Confirmer le panier avec OK ou revenir à l'accueil avec ANNULER`)){
-        window.location.href = "panier.html";
-    }else{
-        window.location.href = "index.html";
-    }
-}
+            // Stocker la récuperation des valeurs dans le localStorage
+            let cartItem = JSON.parse(localStorage.getItem("product"));
+
+            // Pop Up
+            const confirmationPopup = () => {
+                if (window.confirm(`${data.name} arrive bientôt chez vous
+    Confirmer le panier avec OK ou revenir à l'accueil avec ANNULER`)) {
+                    window.location.href = "panier.html";
+                } else {
+                    window.location.href = "index.html";
+                }
+            };
 
 
-// fonction ajouter un produit dans le Local Storage
-const ajoutLocalStorage = () => {
-    cartItem.push(optionsProduit);    
-    localStorage.setItem("product", JSON.stringify(cartItem));
-};
+            // fonction ajouter un produit dans le Local Storage
+            const ajoutLocalStorage = () => {
+                cartItem.push(optionsProduit);
+                localStorage.setItem("product", JSON.stringify(cartItem));
+            };
 
-//si il y a des produits dans le localStorage
-if (cartItem) {
-    ajoutLocalStorage();
-    confirmationPopup();
-}
-// si il n'y a pas de produit dans le localStorage
-else{
-    cartItem = [];
-    ajoutLocalStorage();
-    confirmationPopup();
-}
-    });
+            //si il y a des produits dans le localStorage
+            if (cartItem) {
+                ajoutLocalStorage();
+                confirmationPopup();
+            }
+            // si il n'y a pas de produit dans le localStorage
+            else {
+                cartItem = [];
+                ajoutLocalStorage();
+                confirmationPopup();
+            }
+        });
     }
 });
 
@@ -142,14 +144,14 @@ else{
 //         //   btnPourPanier.addEventListener("click", (event)=>{
 //         //       event.preventDefault();
 //         //   })
-       
+
 //         cartBtn.addEventListener('click', (event) => {
 //             event.preventDefault();
 //         })        
 //         };
 
 
- 
+
 // // Stocker la récuperation des valeurs dans le localStorage
 // let saveItemCart = {
 //     id: data._id,
