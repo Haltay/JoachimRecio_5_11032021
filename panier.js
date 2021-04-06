@@ -18,6 +18,10 @@ if (cartItem === null || cartItem == 0) {
 } else {
     // si le panier n'est pas vide  
     for (i = 0; i < cartItem.length; i++) {
+
+        cartItem[i].couleur_background = (cartItem[i].couleur_background == "Dark brown") ? "#654321" : cartItem[i].couleur_background;
+        cartItem[i].couleur_background = (cartItem[i].couleur_background == "Pale brown") ? "#964B00" : cartItem[i].couleur_background;
+
         containerPanier = containerPanier + `
         
         <div class="card col-8 panier-teddy" style="border: 6px solid ${cartItem[i].couleur_background}; border-radius: 10px">            

@@ -52,8 +52,8 @@ getTeddy((err, data) => {
 
         // TODO: Changer le Data (l.92) pour mettre nom couleur pour Arnold
         data.colors.forEach(data => {
-            (data == "Pale brown") ? data = "#964B00" : data;     //pour Pale Brown
-            data = (data == "Dark brown") ? "#654321" : data;
+            // (data == "Pale brown") ? data = "#964B00" : data;     //pour Pale Brown
+            // data = (data == "Dark brown") ? "#654321" : data;
             const teddyColor = `
             <option value="${data}" class="colorTeddy" style="background-color:${data}">${data}</option>
             `;
