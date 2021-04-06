@@ -19,11 +19,11 @@ if (cartItem === null || cartItem == 0) {
     // si le panier n'est pas vide  
     for (i = 0; i < cartItem.length; i++) {
 
+        // changement de la valeur color pour celle n'existant pas via un opérateur ternaire
         cartItem[i].couleur_background = (cartItem[i].couleur_background == "Dark brown") ? "#654321" : cartItem[i].couleur_background;
         cartItem[i].couleur_background = (cartItem[i].couleur_background == "Pale brown") ? "#964B00" : cartItem[i].couleur_background;
 
-        containerPanier = containerPanier + `
-        
+        containerPanier = containerPanier + `        
         <div class="card col-8 panier-teddy" style="border: 6px solid ${cartItem[i].couleur_background}; border-radius: 10px">            
                 <img class="card-img-top col-4 image-panier-teddy" src="${cartItem[i].image}" alt="Card image cap">            
             <div class="card-body">
@@ -102,7 +102,7 @@ console.log(prixTotal);
 
 // Le code HTML du Total Panier
 const affichePrixPanier = `
-<div class="text-center justify-content-center affichage-prix-panier">Pour recevoir ta commande, les frais de dossier sont de ${prixTotal} € </div>
+<div class="text-center justify-content-center affichage-prix-panier" id="panierTotal">Pour recevoir ta commande, les frais de dossier sont de ${prixTotal} € </div>
 `;
 
 panierItem.insertAdjacentHTML("afterend", affichePrixPanier);
@@ -115,7 +115,7 @@ const affiherFormulaireHtml = () => {
     const FormulaireCommande = document.querySelector(".formulaire");
 
     const structureFormulaire = `
-    <div class="col-md-6 order-md-1">
+    <div class="col-md-4 order-md-1">
         <h4 class="mb-3">Adresse de facturation</h4>
         <form class="needs-validation" novalidate>
             <div class="row">
@@ -180,6 +180,8 @@ const affiherFormulaireHtml = () => {
                 </div>          
             </div>
 
+      
+            <!--
             <h4 class="mb-3">Paiement</h4>
 
             <div class="d-block my-3">
@@ -228,7 +230,7 @@ const affiherFormulaireHtml = () => {
                         Plus que le CVV est c'est fini
                     </div>
                 </div>
-            </div>
+            </div> -->
             <hr class="mb-4">
             <button class="btn btn-primary btn-lg btn-block" id="envoyer-formulaire" type="submit">Confirmer la venue du ou des Teddy</button>
             </form>
@@ -257,6 +259,7 @@ btnCheckout.addEventListener("click", (e) => {
         ville: document.querySelector("#ville").value,
         pays: document.querySelector("#pays").value,
         codePostal: document.querySelector("#code-postal").value,
+        panierTotal: prixTotal,
     }
 
     //---------------- Verifier que les valeurs du formulaire sont bonnes----------------
@@ -362,11 +365,10 @@ btnCheckout.addEventListener("click", (e) => {
         (window.confirm(`    Votre Teddy arrive bientôt chez vous.
     Confirmer le panier avec OK ou annuler le avec ANNULER`)
         )) {
-        // ------------ confirmer l'achat ------------        
+        // ------------ confirmer l'achat ------------
+             window.location.href = "confirmation.html";
         // envoi dans le local storage des données du formulaire
         localStorage.setItem("formulaireValues", JSON.stringify(formulaireValues));
-        //redirection
-        window.location.href = "confirmation.html";
     } else {
         alert("Le formulaire n'est pas rempli correctement");
     };
@@ -401,7 +403,9 @@ document.querySelector("#adresse").value = dataLocalStorageObject.adresse;
 document.querySelector("#ville").value = dataLocalStorageObject.ville;
 document.querySelector("#pays").value = dataLocalStorageObject.pays;
 document.querySelector("#code-postal").value = dataLocalStorageObject.codePostal;
+prixTotal = dataLocalStorageObject.panierTotal;
 
+console.log(dataLocalStorageObject.panierTotal);
 
 
 

@@ -89,9 +89,7 @@ getTeddy((err, data) => {
                 description: data.description,
                 quantite: 1,
                 couleur: choixColor,
-                couleur_background: choixColor,
-
-                
+                couleur_background: choixColor,                
             }
             console.log(optionsProduit);
 
