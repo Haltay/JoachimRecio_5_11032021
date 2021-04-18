@@ -43,31 +43,32 @@ if (cartItem === null || cartItem == 0) {
 // Bouton "Supprimer l'article"
 let btn_delete = document.querySelectorAll(".btn-supprimer");
 
-function removeFromCart(item) {
-    //TODO enlever l'objet item de panier
-    console.log(item);
-}
-
-// for (let j = 0; j < btn_delete.length; j++) {
-//     btn_delete[j].addEventListener("click", (event) => {
-//         event.preventDefault();
-
-//         // selection de l'article à enlever
-//         let id_to_delete = cartItem[j].id_product;
-
-//         // supprimer avec la methode filter
-//         cartItem = cartItem.filter(element => element.id_product !== id_to_delete);
-//         console.log(cartItem);
-
-//         // envoie de la variable dans le local storage pour le modifier
-//         localStorage.setItem("product", JSON.stringify(cartItem));
-
-//         //Avertir de la suppression du produit
-//         alert("Votre Teddy est retourné à la boutique");
-//         window.location.href = "panier.html";
-//     });
-
+// TODO --------------------------------------------------------------
+// function removeFromCart(item) {
+//     //TODO enlever l'objet item de panier
+//     console.log(item);
 // }
+
+for (let j = 0; j < btn_delete.length; j++) {
+    btn_delete[j].addEventListener("click", (event) => {
+        event.preventDefault();
+
+        // selection de l'article à enlever
+        let id_to_delete = cartItem[j].id_product;
+
+        // supprimer avec la methode filter
+        cartItem = cartItem.filter(element => element.id_product !== id_to_delete);
+        console.log(cartItem);
+
+        // envoie de la variable dans le local storage pour le modifier
+        localStorage.setItem("product", JSON.stringify(cartItem));
+
+        //Avertir de la suppression du produit
+        alert("Votre Teddy est retourné à la boutique");
+        window.location.href = "panier.html";
+    });
+
+}
 
 // bouton pour vider le panier
 const btn_delete_basket_html = `
@@ -95,20 +96,22 @@ btn_delete_basket.addEventListener("click", (e) => {
 // Montant Total du panier
 const prixTotalPanier = [];
 
-// for (let k = 0; k < cartItem.length; k++) {
-//     let prixProduitPanier = cartItem[k].price / 100;
+for (let k = 0; k < cartItem.length; k++) {
+    let prixProduitPanier = cartItem[k].price / 100;
 
-//     prixTotalPanier.push(prixProduitPanier);
-// }
+    prixTotalPanier.push(prixProduitPanier);
+}
 
-const priceTotal = JSON.parse(localStorage.getItem('product'));
 
-priceTotal.forEach(price =>  {
-        let prixProduitPanier = price / 100;
+// TODO ----------------------------------------------------------------------
+// const priceTotal = JSON.parse(localStorage.getItem('product'));
+
+// priceTotal.forEach(price =>  {
+//         const prixProduitPanier = price / 100;
 
         
-    prixTotalPanier.push(prixProduitPanier);
-});
+//     prixTotalPanier.push(prixProduitPanier);
+// });
  
 
 

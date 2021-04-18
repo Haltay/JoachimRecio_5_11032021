@@ -28,10 +28,6 @@ getTeddiesData((err, dataTeddies) => {
         // afficher les infos du Teddy
         dataTeddies.forEach(element => {
             
-            // teddyName.innerHTML = element.name;
-            // teddyPrice.innerHTML = element.price;
-            // teddyDescription.innerHTML = element.description;
-
             const content =  `
             <div class="col-8 col-md-5 col-lg-3 card cardTeddy" id="${element._id}">
                 <div class="inner">
