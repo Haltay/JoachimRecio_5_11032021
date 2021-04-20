@@ -1,119 +1,72 @@
-let cartItem = JSON.parse(localStorage.getItem("product"));
-console.log(cartItem);
 
 // Afficher les produits du panier
+const container = document.querySelector(".global-list");
 
-const panierItem = document.querySelector(".panier");
-let containerPanier = [];
-
-// si le panier est vide
-if (cartItem === null || cartItem == 0) {
-    const panierVide = `
-        <div class="panier_vide">
-            <div> Oh non, tu n'as choisi aucun Teddy</div>
-        </div>
-    `;
-    panierItem.innerHTML = panierVide;
-    console.log("snif snif");
-} else {
-    // si le panier n'est pas vide  
-    for (i = 0; i < cartItem.length; i++) {
-
-        // changement de la valeur color pour celle n'existant pas via un opérateur ternaire
-        cartItem[i].couleur_background = (cartItem[i].couleur_background == "Dark brown") ? "#654321" : cartItem[i].couleur_background;
-        cartItem[i].couleur_background = (cartItem[i].couleur_background == "Pale brown") ? "#964B00" : cartItem[i].couleur_background;
-
-        containerPanier = containerPanier + `        
-        <div class="card col-8 mt-4 d-flex flex-column flex-md-row panier-teddy" style="border: 6px solid ${cartItem[i].couleur_background}; border-radius: 10px">            
-                <img class="card-img-top col-4 rounded-circle panier-teddy-image" src="${cartItem[i].image}" alt="Card image cap" style="border: 3px solid ${cartItem[i].couleur_background}">            
-            <div class="card-body panier-teddy-card">
-                <h4 class="card-title">Quantité 1 - ${cartItem[i].nom} de couleur ${cartItem[i].couleur}</h4>
-                <div class="card-text"> Pour seulement ${cartItem[i].price / 100} € - 
-                    <button class="btn btn-primary btn-supprimer" onclick="removeFromCart(${JSON.stringify(cartItem)})"> Supprimer ${cartItem[i].nom} (${cartItem[i].couleur}) </button> 
-                </div>
+function renderComponentProduct() {
+    // si le panier est vide
+    if (cartItem === null) {
+        container.innerHTML = `
+            <div class="panier_vide">
+                <div> Oh non, tu n'as choisi aucun Teddy</div>
             </div>
-        </div>        
         `;
-    }
-    if (i === cartItem.length) {
-        panierItem.innerHTML = containerPanier;
+        console.log("snif snif");
+    } else {
+        // si le panier n'est pas vide  
+        cartItem.forEach((item) => {
+            // changement de la valeur color pour celle n'existant pas via un opérateur ternaire
+            item.couleur_background = (item.couleur_background == "Dark brown") ? "#654321" : item.couleur_background;
+            item.couleur_background = (item.couleur_background == "Pale brown") ? "#964B00" : item.couleur_background;
+
+            container.innerHTML += `        
+                <div class="card col-8 mt-4 d-flex flex-column flex-md-row panier-teddy" style="border: 6px solid ${item.couleur_background}; border-radius: 10px">            
+                        <img class="card-img-top col-4 rounded-circle panier-teddy-image" src="${item.image}" alt="Card image cap" style="border: 3px solid ${item.couleur_background}">            
+                    <div class="card-body panier-teddy-card">
+                        <h4 class="card-title">Quantité 1 - ${item.nom} de couleur ${item.couleur}</h4>
+                        <div class="card-text"> Pour seulement ${item.price / 100} € - 
+                            <button class="btn btn-primary btn-supprimer" onclick='removeFromCart(${JSON.stringify(item)})'> Supprimer ${item.nom} (${item.couleur}) </button> 
+                        </div>
+                    </div>
+                </div>        
+            `;
+        })
     }
 }
 
-// Bouton "Supprimer l'article"
-let btn_delete = document.querySelectorAll(".btn-supprimer");
-
-// TODO --------------------------------------------------------------
-// function removeFromCart(item) {
-//     //TODO enlever l'objet item de panier
-//     console.log(item);
-// }
-
-for (let j = 0; j < btn_delete.length; j++) {
-    btn_delete[j].addEventListener("click", (event) => {
-        event.preventDefault();
-
-        // selection de l'article à enlever
-        let id_to_delete = cartItem[j].id_product;
-
-        // supprimer avec la methode filter
-        cartItem = cartItem.filter(element => element.id_product !== id_to_delete);
-        console.log(cartItem);
-
-        // envoie de la variable dans le local storage pour le modifier
-        localStorage.setItem("product", JSON.stringify(cartItem));
-
-        //Avertir de la suppression du produit
-        alert("Votre Teddy est retourné à la boutique");
-        window.location.href = "panier.html";
-    });
-
+function removeFromCart(item) {
+    let cartItem = JSON.parse(localStorage.getItem("product"));
+    cartItem = cartItem.filter(element => JSON.stringify(element) !== JSON.stringify(item));
+    localStorage.setItem("product", JSON.stringify(cartItem));
+    alert("Votre Teddy est retourné à la boutique");
+    window.location.href = "panier.html";
 }
 
 // bouton pour vider le panier
 const btn_delete_basket_html = `
-<div class="text-center">
-    <button type="button" class="btn btn-primary btn-lg col-8 btn-delete-basket"> Si tu as changé d'avis et que tu ne veux plus aucun Teddy </button>
-</div>
-`;
-panierItem.insertAdjacentHTML("afterend", btn_delete_basket_html);
+    <div class="text-center">
+        <button type="button" onclick="emptyCart()" class="btn btn-primary btn-lg col-8 btn-delete-basket"> Si tu as changé d'avis et que tu ne veux plus aucun Teddy </button>
+    </div>
+    `;
+container.insertAdjacentHTML("afterend", btn_delete_basket_html);
 
-const btn_delete_basket = document.querySelector(".btn-delete-basket");
-
-// suprression de la key product du local storage
-btn_delete_basket.addEventListener("click", (e) => {
-    e.preventDefault();
-
+function emptyCart() {
     localStorage.removeItem("product");
-
     // message d'alerte
     alert(" Votre panier est tout léger sans Teddy ");
-    window.location.href = "panier.html";
-});
-
+    window.location.href = "index.html";
+}
 
 // ------------------------------ TOTAL PANIER ---------------------------
+
 // Montant Total du panier
 const prixTotalPanier = [];
 
-for (let k = 0; k < cartItem.length; k++) {
-    let prixProduitPanier = cartItem[k].price / 100;
+let cartItem = JSON.parse(localStorage.getItem('product'));
 
-    prixTotalPanier.push(prixProduitPanier);
-}
-
-
-// TODO ----------------------------------------------------------------------
-// const priceTotal = JSON.parse(localStorage.getItem('product'));
-
-// priceTotal.forEach(price =>  {
-//         const prixProduitPanier = price / 100;
-
-        
-//     prixTotalPanier.push(prixProduitPanier);
-// });
- 
-
+cartItem.forEach(item => {
+    let prixProduit = item.price / 100;
+    prixTotalPanier.push(prixProduit);
+});
 
 
 // additionner les prix de tout les article avec la methode "reduce"
@@ -122,16 +75,20 @@ let prixTotal = prixTotalPanier.reduce(reducer, 0);     // https://developer.moz
 console.log(prixTotal);
 
 // Le code HTML du Total Panier
-const affichePrixPanier = `
-<div class="text-center justify-content-center mt-4 mb-4 affichage-prix-panier" id="panierTotal">Pour recevoir ta commande, <b>les frais de dossier sont de ${prixTotal} €</b> </div>
+const containerTotalPrice = `
+    <div class="text-center justify-content-center mt-4 mb-4 affichage-prix-panier" id="panierTotal">Pour recevoir ta commande, <b>les frais de dossier sont de ${prixTotal} €</b> </div>
 `;
+container.insertAdjacentHTML("afterend", containerTotalPrice);
 
-panierItem.insertAdjacentHTML("afterend", affichePrixPanier);
+// Générer un numéro de commande aléatoire via uuid
 
+function CreateUUID() {
+    return ([1e7] + -1e3 + -4e3).replace(/[018]/g, c =>
+        (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+    )
+}
 
-// Générer un numéro de commande aléatoire
-let commandNumber = Math.round(Math.random() * 587496 * prixTotal);
-console.log(commandNumber);
+let commandNumber = CreateUUID();
 
 
 // Récuperation des données du formulaire (hors carte crédit) pour local storage
@@ -140,6 +97,7 @@ const btnCheckout = document.querySelector("#envoyer-formulaire");
 
 btnCheckout.addEventListener("click", (e) => {
     e.preventDefault();
+
 
     const formulaireValues = {
         prenom: document.querySelector("#prenom").value,
@@ -250,16 +208,28 @@ btnCheckout.addEventListener("click", (e) => {
     // confirmation de la validation de la commande
 
     // controle de la validité du formulaire 
-    if (prenomControl() && nomControl() && codePostalControl() && EmailControl() && AdresseControl() && villeControl() &&
-        (window.confirm(`    Votre Teddy arrive bientôt chez vous.
-    Confirmer le panier avec OK ou annuler le avec ANNULER`)
-        )) {
-        // ------------ confirmer l'achat ------------
-        window.location.href = "confirmation.html";
-        // envoi dans le local storage des données du formulaire
-        localStorage.setItem("formulaireValues", JSON.stringify(formulaireValues));
-    } else {
-        alert("Le formulaire n'est pas rempli correctement");
+
+    function formValidity() {
+        if (prenomControl() && nomControl() && codePostalControl() && EmailControl() && AdresseControl() && villeControl() &&
+            (window.confirm(`    Votre Teddy arrive bientôt chez vous.
+        Confirmer le panier avec OK ou annuler le avec ANNULER`)
+            )) {
+            // ------------ confirmer l'achat ------------
+            window.location.href = "confirmation.html";
+            // envoi dans le local storage des données du formulaire
+            localStorage.setItem("formulaireValues", JSON.stringify(formulaireValues));
+        } else {
+            alert("Le formulaire n'est pas rempli correctement");
+        }
     }
+
+    formValidity();
+
 });
 
+// Point d'entrée : 
+
+window.addEventListener('load', (event) => {
+    renderComponentProduct();
+
+})

@@ -174,7 +174,7 @@ footer a:hover {
   color: white;
 }
 
-.panier {
+.global-list {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -186,7 +186,7 @@ footer a:hover {
           justify-content: center;
 }
 
-.panier .panier-teddy {
+.global-list .panier-teddy {
   padding: 1%;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
@@ -197,11 +197,11 @@ footer a:hover {
           align-items: center;
 }
 
-.panier .panier-teddy-image {
+.global-list .panier-teddy-image {
   padding: 0;
 }
 
-.panier .panier-teddy-card {
+.global-list .panier-teddy-card {
   text-align: center;
 }
 
