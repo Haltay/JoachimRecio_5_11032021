@@ -162,6 +162,11 @@ footer {
     color: white;
 }
 
+.panier_vide {
+    font-size: large;
+    
+}
+
 .global-list {
     display: flex;
     padding: 0;
@@ -199,8 +204,7 @@ footer {
     }
 
     .btn-block {
-        margin-bottom: 15px;
-        
+        margin-bottom: 15px;        
     }
 }
 
@@ -208,6 +212,7 @@ footer {
 .infoChampManquant {
     color: red;
     background-color: yellow;
+    border-radius: 5px;
 }
 
 
@@ -220,11 +225,6 @@ footer {
         margin-left: auto;
         margin-right: auto;
         background-color: white;
-border-radius: 2%;
-
-        .adresse-confirmation {
-            font-size: large;
-            padding-left: 2%;
-        }
+        border-radius: 2%;     
     }
 }

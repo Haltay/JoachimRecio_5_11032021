@@ -27,9 +27,8 @@ getTeddy((err, data) => {
     if (err) {
         console.log(err);
     } else {
-
         // afficher les infos du Teddy                 
-        const contentDetails = `                             
+        containerDetails.innerHTML = `                             
         <div class="card col-10 mt-5 mb-5 cardTeddyDescription  rounded">
             <div class="card-horizontal d-flex flex-column flex-md-row">
                 <div class="img-square-wrapper col-5-md imgOurs">
@@ -54,15 +53,12 @@ getTeddy((err, data) => {
             </div>                                  
         </div>`;
 
-        containerDetails.innerHTML = contentDetails;
-
         // Choix de la couleur du Teddy
         const choiceColor = document.querySelector(".colorsTeddy");
         data.colors.forEach(data => {
-            const teddyColor = `
+            choiceColor.innerHTML += `
             <option value="${data}" class="colorTeddy">${data}</option>
             `;
-            choiceColor.innerHTML += teddyColor;
         });
     }
 });
@@ -101,8 +97,8 @@ getTeddy((err, data) => {
 
             // Pop Up
             const confirmationPopup = () => {
-                if (window.confirm(`${data.name} arrive bientôt chez vous
-    Confirmer le panier avec OK ou revenir à l'accueil avec ANNULER`)) {
+                if (window.confirm(`${data.name} arrive bientôt chez toi
+Confirme le panier avec OK ou reviens à l'accueil avec ANNULER`)) {
                     window.location.href = "panier.html";
                 } else {
                     window.location.href = "index.html";
@@ -115,17 +111,21 @@ getTeddy((err, data) => {
                 localStorage.setItem("product", JSON.stringify(cartItem));
             };
 
-            //si il y a des produits dans le localStorage
-            if (cartItem) {
-                ajoutLocalStorage();
-                confirmationPopup();
+            function sendingLocalStorage() {
+                //si il y a des produits dans le localStorage
+                if (cartItem) {
+                    ajoutLocalStorage();
+                    confirmationPopup();
+                }
+                // si il n'y a pas de produit dans le localStorage
+                else {
+                    cartItem = [];
+                    ajoutLocalStorage();
+                    confirmationPopup();
+                }
             }
-            // si il n'y a pas de produit dans le localStorage
-            else {
-                cartItem = [];
-                ajoutLocalStorage();
-                confirmationPopup();
-            }
+
+            sendingLocalStorage();
         });
     }
 });

@@ -1,13 +1,14 @@
-
 // Afficher les produits du panier
 const container = document.querySelector(".global-list");
+
+let cartItem = JSON.parse(localStorage.getItem('product'));
 
 function renderComponentProduct() {
     // si le panier est vide
     if (cartItem === null) {
         container.innerHTML = `
-            <div class="panier_vide">
-                <div> Oh non, tu n'as choisi aucun Teddy</div>
+            <div class=" pt-2 pb-4 panier_vide">
+                <h2> Oh non, tu n'as choisi aucun Teddy </h2>
             </div>
         `;
         console.log("snif snif");
@@ -33,11 +34,17 @@ function renderComponentProduct() {
     }
 }
 
+// Point d'entrée :
+window.addEventListener('load', (event) => {
+    renderComponentProduct();
+})
+
+// Suppression dans la panier d'un des Teddy non voulu
 function removeFromCart(item) {
     let cartItem = JSON.parse(localStorage.getItem("product"));
     cartItem = cartItem.filter(element => JSON.stringify(element) !== JSON.stringify(item));
     localStorage.setItem("product", JSON.stringify(cartItem));
-    alert("Votre Teddy est retourné à la boutique");
+    alert("Ton Teddy est retourné à la boutique");
     window.location.href = "panier.html";
 }
 
@@ -61,18 +68,14 @@ function emptyCart() {
 // Montant Total du panier
 const prixTotalPanier = [];
 
-let cartItem = JSON.parse(localStorage.getItem('product'));
-
 cartItem.forEach(item => {
     let prixProduit = item.price / 100;
     prixTotalPanier.push(prixProduit);
 });
 
-
 // additionner les prix de tout les article avec la methode "reduce"
 const reducer = (accumulator, currentValue) => accumulator + currentValue;
 let prixTotal = prixTotalPanier.reduce(reducer, 0);     // https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce
-console.log(prixTotal);
 
 // Le code HTML du Total Panier
 const containerTotalPrice = `
@@ -81,23 +84,17 @@ const containerTotalPrice = `
 container.insertAdjacentHTML("afterend", containerTotalPrice);
 
 // Générer un numéro de commande aléatoire via uuid
-
 function CreateUUID() {
     return ([1e7] + -1e3 + -4e3).replace(/[018]/g, c =>
         (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
     )
 }
 
-let commandNumber = CreateUUID();
-
-
-// Récuperation des données du formulaire (hors carte crédit) pour local storage
-
+// Récuperation des données du formulaire pour local storage
 const btnCheckout = document.querySelector("#envoyer-formulaire");
 
 btnCheckout.addEventListener("click", (e) => {
     e.preventDefault();
-
 
     const formulaireValues = {
         prenom: document.querySelector("#prenom").value,
@@ -108,12 +105,12 @@ btnCheckout.addEventListener("click", (e) => {
         pays: document.querySelector("#pays").value,
         codePostal: document.querySelector("#code-postal").value,
         panierTotal: prixTotal,
-        numeroCommande: commandNumber,
+        numeroCommande: CreateUUID(),
     }
 
     //---------------- Verifier que les valeurs du formulaire sont bonnes----------------
     const textAlert = (value) => {
-        return ` Pour votre ${value} les symboles et chiffres ne sont pas autorisés \n Merci de le refaire `
+        return ` Pour ton ${value} les symboles et chiffres ne sont pas autorisés \n Merci de le refaire `
     };
     const regExPrenomNomVille = (value) => {
         return /^[a-zA-Z]{1}[a-zA-Z -]*$/.test(value);
@@ -205,14 +202,14 @@ btnCheckout.addEventListener("click", (e) => {
         }
     }
 
-    // confirmation de la validation de la commande
+// confirmation de la validation de la commande
 
     // controle de la validité du formulaire 
 
     function formValidity() {
         if (prenomControl() && nomControl() && codePostalControl() && EmailControl() && AdresseControl() && villeControl() &&
-            (window.confirm(`    Votre Teddy arrive bientôt chez vous.
-        Confirmer le panier avec OK ou annuler le avec ANNULER`)
+            (window.confirm(`    Ton colis Teddy arrive bientôt chez toi.
+    Confirme son paiement avec OK ou annule le avec ANNULER`)
             )) {
             // ------------ confirmer l'achat ------------
             window.location.href = "confirmation.html";
@@ -224,12 +221,4 @@ btnCheckout.addEventListener("click", (e) => {
     }
 
     formValidity();
-
 });
-
-// Point d'entrée : 
-
-window.addEventListener('load', (event) => {
-    renderComponentProduct();
-
-})
