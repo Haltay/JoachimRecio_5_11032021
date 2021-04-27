@@ -1,14 +1,14 @@
 //----------------- Appel à l'API -----------------
 const getTeddiesData = (callback) => {
-    const request = new XMLHttpRequest() ;
-    request.open ('GET', 'http://localhost:3000/api/teddies') ;
+    const request = new XMLHttpRequest();
+    request.open('GET', 'http://localhost:3000/api/teddies');
     request.send();
     request.addEventListener('readystatechange', () => {
-        if(request.readyState === 4 && request.status === 200) {
-           const dataTeddies = JSON.parse(request.responseText)
-           callback(undefined, dataTeddies);
-        } else if(request.readyState === 4) {
-           callback('Oups les données sont inaccessibles', undefined);
+        if (request.readyState === 4 && request.status === 200) {
+            const dataTeddies = JSON.parse(request.responseText)
+            callback(undefined, dataTeddies);
+        } else if (request.readyState === 4) {
+            callback('Oups les données sont inaccessibles', undefined);
         }
     });
 }
@@ -17,12 +17,13 @@ const getTeddiesData = (callback) => {
 const container = document.querySelector(".container");
 
 getTeddiesData((err, dataTeddies) => {
-    if(err){
+    if (err) {
         console.log(err);
-    }else{
+    } else {
         // afficher les infos du Teddy
         dataTeddies.forEach(element => {
-            container.innerHTML +=  `
+
+            const containerIndex = `
                 <div class="col-8 col-md-5 col-lg-3 card cardTeddy" id="${element._id}">
                     <div class="inner">
                         <img class="card-img-top imageours" src="${element.imageUrl}" alt="${element.name}">
@@ -33,7 +34,9 @@ getTeddiesData((err, dataTeddies) => {
                         <p class="card-text priceours">A présent, il ne te reste plus qu'à <b>payer les frais de dossier</b> (${element.price / 100} €) et <b>choisir dans quelle couleur tu veux que je vienne</b>.</p>
                         <a href="teddyDescription.html?id=${element._id}" class="btn btn-lg btn-block btnadoptemoi">Adopte moi</a>
                     </div>
-                </div>`;                   
+                </div>`;
+
+            container.innerHTML += containerIndex;
         });
     }
 });

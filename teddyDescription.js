@@ -28,30 +28,33 @@ getTeddy((err, data) => {
         console.log(err);
     } else {
         // afficher les infos du Teddy                 
-        containerDetails.innerHTML = `                             
-        <div class="card col-10 mt-5 mb-5 cardTeddyDescription  rounded">
-            <div class="card-horizontal d-flex flex-column flex-md-row">
-                <div class="img-square-wrapper col-5-md imgOurs">
-                    <img class="card-img  rounded imageoursDetails" src="${data.imageUrl}" alt="${data.name}">
+        const containerTeddyDescription = `                             
+            <div class="card col-10 mt-5 mb-5 cardTeddyDescription  rounded">
+                <div class="card-horizontal d-flex flex-column flex-md-row">
+                    <div class="img-square-wrapper col-5-md imgOurs">
+                        <img class="card-img  rounded imageoursDetails" src="${data.imageUrl}" alt="${data.name}">
+                    </div>
+                    <div class="card-body">
+                        <h2 class="card-title nameourDetails"><center>Salut, moi c'est<br><b>${data.name}</b></center></h2>
+                        <p class="card-text descriptionoursDetails">
+                            <center>Faisons connaissance.</center>
+                            <h6 class="text-justify">${data.description}</h6>
+                            <p class="card-text priceoursDetails text-justify">Pour que je sois ton nouvel ami, il ne te reste plus qu'à <b>payer les frais de dossier</b>
+                            (${data.price / 100} euros) et <b>choisir dans quelle couleur tu veux que je vienne</b>.
+                        </p>
+                        
+                        <center><h5 label for="exampleFormControlSelect2">Choisi moi comme tu m'aimes</label></center>
+                        <select class="form-control colorsTeddy" id="couleur_Produit">
+                        </select>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <h2 class="card-title nameourDetails"><center>Salut, moi c'est<br><b>${data.name}</b></center></h2>
-                    <p class="card-text descriptionoursDetails">
-                        <center>Faisons connaissance.</center>
-                        <h6 class="text-justify">${data.description}</h6>
-                        <p class="card-text priceoursDetails text-justify">Pour que je sois ton nouvel ami, il ne te reste plus qu'à <b>payer les frais de dossier</b>
-                        (${data.price / 100} euros) et <b>choisir dans quelle couleur tu veux que je vienne</b>.
-                    </p>
-                    
-                    <center><h5 label for="exampleFormControlSelect2">Choisi moi comme tu m'aimes</label></center>
-                    <select class="form-control colorsTeddy" id="couleur_Produit">
-                    </select>
-                </div>
-            </div>
-            <div class="card-footer">
-                <button class="btn btn-lg btn-block addCart">Pour avoir bientôt ${data.name} chez toi </button>
-            </div>                                  
-        </div>`;
+                <div class="card-footer">
+                    <button class="btn btn-lg btn-block addCart">Pour avoir bientôt ${data.name} chez toi </button>
+                </div>                                  
+            </div>`;
+
+        containerDetails.innerHTML = containerTeddyDescription;
+        
 
         // Choix de la couleur du Teddy
         const getChoiceColor = document.querySelector(".colorsTeddy");

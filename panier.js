@@ -6,11 +6,12 @@ let cartItem = JSON.parse(localStorage.getItem('product'));
 function renderComponentProduct() {
     // si le panier est vide
     if (cartItem === null) {
-        container.innerHTML = `
+        const containerBasketEmpty = `
             <div class=" pt-2 pb-4 panier_vide">
                 <h2> Oh non, tu n'as choisi aucun Teddy </h2>
-            </div>
-        `;
+            </div>`;
+        container.innerHTML = containerBasketEmpty;
+
         console.log("snif snif");
     } else {
         // si le panier n'est pas vide  
@@ -19,7 +20,7 @@ function renderComponentProduct() {
             item.couleur_background = (item.couleur_background == "Dark brown") ? "#654321" : item.couleur_background;
             item.couleur_background = (item.couleur_background == "Pale brown") ? "#964B00" : item.couleur_background;
 
-            container.innerHTML += `        
+            const containerBasketFull = `        
                 <div class="card col-8 mt-4 d-flex flex-column flex-md-row panier-teddy" style="border: 6px solid ${item.couleur_background}; border-radius: 10px">            
                         <img class="card-img-top col-4 rounded-circle panier-teddy-image" src="${item.image}" alt="Card image cap" style="border: 3px solid ${item.couleur_background}">            
                     <div class="card-body panier-teddy-card">
@@ -28,8 +29,8 @@ function renderComponentProduct() {
                             <button class="btn btn-primary btn-supprimer" onclick='removeFromCart(${JSON.stringify(item)})'> Supprimer ${item.nom} (${item.couleur}) </button> 
                         </div>
                     </div>
-                </div>        
-            `;
+                </div>`;
+            container.innerHTML += containerBasketFull;
         })
     }
 }

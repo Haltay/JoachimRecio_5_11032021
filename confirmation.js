@@ -5,7 +5,7 @@ const confirmation = document.querySelector(".confirmation");
 
 // Affichage de la card Confirmation et des noms du/des Teddy
 
-confirmation.innerHTML = `
+const confirmationDetails = `
     <div class="col-md-5 mt-3 confirmation-achat">
         <h3 class="text pt-4 nom-prenom">${formulaireValues.prenom} ${formulaireValues.nom}</h3>
         <h4 class="mt-5 theme-color mb-5">Merci pour ton adoption:<br> <p class="text-center">${formulaireValues.numeroCommande}</p></h4> 
@@ -28,6 +28,9 @@ confirmation.innerHTML = `
 
         <div class="text-center mt-5 pb-4 "> <button class="btn btn-primary" id="retourAccueil">Revoir tous les Teddys</button> </div>
     </div>`;
+
+confirmation.innerHTML = confirmationDetails;
+
 
 // Affichage du nom du/des Teddy commandé(s)
 const displayName = document.querySelector(".nameTeddy");
