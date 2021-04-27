@@ -54,9 +54,9 @@ getTeddy((err, data) => {
         </div>`;
 
         // Choix de la couleur du Teddy
-        const choiceColor = document.querySelector(".colorsTeddy");
+        const getChoiceColor = document.querySelector(".colorsTeddy");
         data.colors.forEach(data => {
-            choiceColor.innerHTML += `
+            getChoiceColor.innerHTML += `
             <option value="${data}" class="colorTeddy">${data}</option>
             `;
         });
@@ -106,7 +106,7 @@ Confirme le panier avec OK ou reviens à l'accueil avec ANNULER`)) {
             };
 
             // fonction ajouter un produit dans le Local Storage
-            const ajoutLocalStorage = () => {
+            const addingLocalStorage = () => {
                 cartItem.push(optionsProduit);
                 localStorage.setItem("product", JSON.stringify(cartItem));
             };
@@ -114,13 +114,13 @@ Confirme le panier avec OK ou reviens à l'accueil avec ANNULER`)) {
             function sendingLocalStorage() {
                 //si il y a des produits dans le localStorage
                 if (cartItem) {
-                    ajoutLocalStorage();
+                    addingLocalStorage();
                     confirmationPopup();
                 }
                 // si il n'y a pas de produit dans le localStorage
                 else {
                     cartItem = [];
-                    ajoutLocalStorage();
+                    addingLocalStorage();
                     confirmationPopup();
                 }
             }

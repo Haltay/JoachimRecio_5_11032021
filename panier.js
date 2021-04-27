@@ -66,25 +66,25 @@ function emptyCart() {
 // ------------------------------ TOTAL PANIER ---------------------------
 
 // Montant Total du panier
-const prixTotalPanier = [];
+const priceTotalBasket = [];
 
 cartItem.forEach(item => {
     let prixProduit = item.price / 100;
-    prixTotalPanier.push(prixProduit);
+    priceTotalBasket.push(prixProduit);
 });
 
 // additionner les prix de tout les article avec la methode "reduce"
 const reducer = (accumulator, currentValue) => accumulator + currentValue;
-let prixTotal = prixTotalPanier.reduce(reducer, 0);     // https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce
+let priceTotal = priceTotalBasket.reduce(reducer, 0);     // https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce
 
 // Le code HTML du Total Panier
 const containerTotalPrice = `
-    <div class="text-center justify-content-center mt-4 mb-4 affichage-prix-panier" id="panierTotal">Pour recevoir ta commande, <b>les frais de dossier sont de ${prixTotal} €</b> </div>
+    <div class="text-center justify-content-center mt-4 mb-4 affichage-prix-panier" id="panierTotal">Pour recevoir ta commande, <b>les frais de dossier sont de ${priceTotal} €</b> </div>
 `;
 container.insertAdjacentHTML("afterend", containerTotalPrice);
 
 // Générer un numéro de commande aléatoire via uuid
-function CreateUUID() {
+function createUUID() {
     return ([1e7] + -1e3 + -4e3).replace(/[018]/g, c =>
         (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
     )
@@ -104,8 +104,8 @@ btnCheckout.addEventListener("click", (e) => {
         ville: document.querySelector("#ville").value,
         pays: document.querySelector("#pays").value,
         codePostal: document.querySelector("#code-postal").value,
-        panierTotal: prixTotal,
-        numeroCommande: CreateUUID(),
+        panierTotal: priceTotal,
+        numeroCommande: createUUID(),
     }
 
     //---------------- Verifier que les valeurs du formulaire sont bonnes----------------
