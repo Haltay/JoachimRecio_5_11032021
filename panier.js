@@ -87,8 +87,7 @@ container.insertAdjacentHTML("afterend", containerTotalPrice);
 // Générer un numéro de commande aléatoire via uuid
 function createUUID() {
     return ([1e7] + -1e3 + -4e3).replace(/[018]/g, c =>
-        (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
-    )
+        (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16))
 }
 
 // Récuperation des données du formulaire pour local storage
@@ -98,16 +97,20 @@ btnCheckout.addEventListener("click", (e) => {
     e.preventDefault();
 
     const formulaireValues = {
-        prenom: document.querySelector("#prenom").value,
-        nom: document.querySelector("#nom").value,
+        firstName: document.querySelector("#prenom").value,
+        lastName: document.querySelector("#nom").value,
         email: document.querySelector("#email").value,
-        adresse: document.querySelector("#adresse").value,
-        ville: document.querySelector("#ville").value,
-        pays: document.querySelector("#pays").value,
+        address: document.querySelector("#adresse").value,
+        city: document.querySelector("#ville").value,
+        country: document.querySelector("#pays").value,
         codePostal: document.querySelector("#code-postal").value,
         panierTotal: priceTotal,
         numeroCommande: createUUID(),
+        cart: cartItem,
     }
+
+    console.log(formulaireValues);
+ 
 
     //---------------- Verifier que les valeurs du formulaire sont bonnes----------------
     const textAlert = (value) => {
@@ -215,7 +218,7 @@ btnCheckout.addEventListener("click", (e) => {
             // ------------ confirmer l'achat ------------
             window.location.href = "confirmation.html";
             // envoi dans le local storage des données du formulaire
-            localStorage.setItem("formulaireValues", JSON.stringify(formulaireValues));
+            localStorage.setItem("formulaireValues", JSON.stringify(formulaireValues));            
         } else {
             alert("Le formulaire n'est pas rempli correctement");
         }

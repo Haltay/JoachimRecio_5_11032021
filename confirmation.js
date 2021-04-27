@@ -46,7 +46,7 @@ const backIndex = document.querySelector("#retourAccueil");
 backIndex.addEventListener("click", (e) => {
     e.preventDefault();
 
-    localStorage.removeItem("product");
+    localStorage.clear();
 
     window.location.href = "index.html";
 });
