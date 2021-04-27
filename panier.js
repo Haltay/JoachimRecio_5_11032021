@@ -106,11 +106,8 @@ btnCheckout.addEventListener("click", (e) => {
         codePostal: document.querySelector("#code-postal").value,
         panierTotal: priceTotal,
         numeroCommande: createUUID(),
-        cart: cartItem,
+        // cart: cartItem,
     }
-
-    console.log(formulaireValues);
- 
 
     //---------------- Verifier que les valeurs du formulaire sont bonnes----------------
     const textAlert = (value) => {
@@ -206,7 +203,20 @@ btnCheckout.addEventListener("click", (e) => {
         }
     }
 
-// confirmation de la validation de la commande
+    // Pour envoyer vers serveur POST
+
+    function postCommand() {
+        fetch("http://localhost:3000/api/teddies/order", {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formulaireValues)
+        });
+    }
+
+    // confirmation de la validation de la commande
 
     // controle de la validité du formulaire 
 
@@ -218,11 +228,26 @@ btnCheckout.addEventListener("click", (e) => {
             // ------------ confirmer l'achat ------------
             window.location.href = "confirmation.html";
             // envoi dans le local storage des données du formulaire
-            localStorage.setItem("formulaireValues", JSON.stringify(formulaireValues));            
+            localStorage.setItem("formulaireValues", JSON.stringify(formulaireValues));
+            postCommand();
         } else {
             alert("Le formulaire n'est pas rempli correctement");
         }
     }
-
+ 
     formValidity();
 });
+
+// fetch('http://localhost:3000', {method: 'POST', "formulaireValues"})
+//     .then(results => results.json())
+//     .then(console.log);
+
+// fetch("http://localhost:3000", {
+// 	method: “POST”,
+// 	headers: { 
+// 'Accept': 'application/json', 
+// 'Content-Type': 'application/json' 
+// },
+// 	body: JSON.stringify(formulaireValues)
+// });
+
