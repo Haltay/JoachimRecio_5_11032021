@@ -204,19 +204,33 @@ btnCheckout.addEventListener("click", (e) => {
     }
 
     // Pour envoyer vers serveur POST
-
-    function postCommand() {
-        fetch("http://localhost:3000/api/teddies/order", {
-            method: "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formulaireValues)
-        });
+    function post(url, sendOrder) {
+        return new Promise((resolve, reject) => {
+            let request = new XMLHttpRequest();
+            request.open("POST", url);
+            request.setRequestHeader("content-type", "application/json");
+            request.send(JSON.stringify(sendOrder));
+            request.onreadystatechange = function () {
+                if (this.readyState === 4) {
+                    if (this.status === 201) {
+                        resolve(JSON.parse(this.responseText));
+                    } else {
+                        reject(request);
+                    }
+                }
+            }
+        })
     }
 
-    // confirmation de la validation de la commande
+    const sendOrder = {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formulaireValues),
+    }
+
+// confirmation de la validation de la commande
 
     // controle de la validité du formulaire 
 
@@ -225,16 +239,20 @@ btnCheckout.addEventListener("click", (e) => {
             (window.confirm(`    Ton colis Teddy arrive bientôt chez toi.
     Confirme son paiement avec OK ou annule le avec ANNULER`)
             )) {
+            //------------- Envoi au back --------------
+            post("http://localhost:3000/api/teddies/order", sendOrder);
+
             // ------------ confirmer l'achat ------------
-            window.location.href = "confirmation.html";
+            // window.location.href = "confirmation.html";
+
             // envoi dans le local storage des données du formulaire
-            localStorage.setItem("formulaireValues", JSON.stringify(formulaireValues));
-            postCommand();
+            localStorage.setItem("formulaireValues", JSON.stringify(formulaireValues));            
+
         } else {
             alert("Le formulaire n'est pas rempli correctement");
         }
     }
- 
+
     formValidity();
 });
 
