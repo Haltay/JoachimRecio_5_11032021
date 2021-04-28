@@ -243,7 +243,7 @@ btnCheckout.addEventListener("click", (e) => {
             post("http://localhost:3000/api/teddies/order", sendOrder);
 
             // ------------ confirmer l'achat ------------
-            // window.location.href = "confirmation.html";
+            window.location.href = "confirmation.html";
 
             // envoi dans le local storage des données du formulaire
             localStorage.setItem("formulaireValues", JSON.stringify(formulaireValues));            
@@ -255,17 +255,3 @@ btnCheckout.addEventListener("click", (e) => {
 
     formValidity();
 });
-
-// fetch('http://localhost:3000', {method: 'POST', "formulaireValues"})
-//     .then(results => results.json())
-//     .then(console.log);
-
-// fetch("http://localhost:3000", {
-// 	method: “POST”,
-// 	headers: { 
-// 'Accept': 'application/json', 
-// 'Content-Type': 'application/json' 
-// },
-// 	body: JSON.stringify(formulaireValues)
-// });
-
