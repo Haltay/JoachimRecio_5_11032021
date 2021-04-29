@@ -1,11 +1,11 @@
 // Afficher les produits du panier
 const container = document.querySelector(".global-list");
 
-let cartItem = JSON.parse(localStorage.getItem('product'));
+let productTeddy = JSON.parse(localStorage.getItem('product'));
 
 function renderComponentProduct() {
     // si le panier est vide
-    if (cartItem === null) {
+    if (productTeddy === null) {
         const containerBasketEmpty = `
             <div class=" pt-2 pb-4 panier_vide">
                 <h2> Oh non, tu n'as choisi aucun Teddy </h2>
@@ -15,7 +15,7 @@ function renderComponentProduct() {
         console.log("snif snif");
     } else {
         // si le panier n'est pas vide  
-        cartItem.forEach((item) => {
+        productTeddy.forEach((item) => {
             // changement de la valeur color pour celle n'existant pas via un opérateur ternaire
             item.couleur_background = (item.couleur_background == "Dark brown") ? "#654321" : item.couleur_background;
             item.couleur_background = (item.couleur_background == "Pale brown") ? "#964B00" : item.couleur_background;
@@ -42,9 +42,9 @@ window.addEventListener('load', (event) => {
 
 // Suppression dans la panier d'un des Teddy non voulu
 function removeFromCart(item) {
-    let cartItem = JSON.parse(localStorage.getItem("product"));
-    cartItem = cartItem.filter(element => JSON.stringify(element) !== JSON.stringify(item));
-    localStorage.setItem("product", JSON.stringify(cartItem));
+    let productTeddy = JSON.parse(localStorage.getItem("product"));
+    productTeddy = productTeddy.filter(element => JSON.stringify(element) !== JSON.stringify(item));
+    localStorage.setItem("product", JSON.stringify(productTeddy));
     alert("Ton Teddy est retourné à la boutique");
     window.location.href = "panier.html";
 }
@@ -69,7 +69,7 @@ function emptyCart() {
 // Montant Total du panier
 const priceTotalBasket = [];
 
-cartItem.forEach(item => {
+productTeddy.forEach(item => {
     let prixProduit = item.price / 100;
     priceTotalBasket.push(prixProduit);
 });
@@ -85,10 +85,10 @@ const containerTotalPrice = `
 container.insertAdjacentHTML("afterend", containerTotalPrice);
 
 // Générer un numéro de commande aléatoire via uuid
-function createUUID() {
-    return ([1e7] + -1e3 + -4e3).replace(/[018]/g, c =>
-        (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16))
-}
+// function createUUID() {
+//     return ([1e7] + -1e3 + -4e3).replace(/[018]/g, c =>
+//         (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16))
+// }
 
 // Récuperation des données du formulaire pour local storage
 const btnCheckout = document.querySelector("#envoyer-formulaire");
@@ -96,7 +96,7 @@ const btnCheckout = document.querySelector("#envoyer-formulaire");
 btnCheckout.addEventListener("click", (e) => {
     e.preventDefault();
 
-    const formulaireValues = {
+    const contact = {
         firstName: document.querySelector("#prenom").value,
         lastName: document.querySelector("#nom").value,
         email: document.querySelector("#email").value,
@@ -105,8 +105,7 @@ btnCheckout.addEventListener("click", (e) => {
         country: document.querySelector("#pays").value,
         codePostal: document.querySelector("#code-postal").value,
         panierTotal: priceTotal,
-        numeroCommande: createUUID(),
-        // cart: cartItem,
+        // numeroCommande: createUUID(),
     }
 
     //---------------- Verifier que les valeurs du formulaire sont bonnes----------------
@@ -133,7 +132,7 @@ btnCheckout.addEventListener("click", (e) => {
 
     function prenomControl() {
         // controle des données prénom
-        const lePrenom = formulaireValues.prenom;
+        const lePrenom = contact.prenom;
         if (regExPrenomNomVille(lePrenom)) {
             return true;
         } else {
@@ -145,7 +144,7 @@ btnCheckout.addEventListener("click", (e) => {
 
     function nomControl() {
         // controle des données nom
-        const leNom = formulaireValues.nom;
+        const leNom = contact.nom;
         if (regExPrenomNomVille(leNom)) {
             return true;
         } else {
@@ -157,7 +156,7 @@ btnCheckout.addEventListener("click", (e) => {
 
     function codePostalControl() {
         // controle des données code postal
-        const leCodePostal = formulaireValues.codePostal;
+        const leCodePostal = contact.codePostal;
         if (regExCodePostal(leCodePostal)) {
             return true;
         } else {
@@ -169,7 +168,7 @@ btnCheckout.addEventListener("click", (e) => {
 
     function EmailControl() {
         // controle des données de l'email
-        const lEmail = formulaireValues.email;
+        const lEmail = contact.email;
         if (regExEmail(lEmail)) {
             return true;
         } else {
@@ -181,7 +180,7 @@ btnCheckout.addEventListener("click", (e) => {
 
     function AdresseControl() {
         // controle des données de l'adresse
-        const lAdresse = formulaireValues.adresse;
+        const lAdresse = contact.adresse;
         if (regExAdresse(lAdresse)) {
             return true;
         } else {
@@ -193,7 +192,7 @@ btnCheckout.addEventListener("click", (e) => {
 
     function villeControl() {
         // controle des données ville
-        const laVille = formulaireValues.ville;
+        const laVille = contact.ville;
         if (regExPrenomNomVille(laVille)) {
             return true;
         } else {
@@ -203,17 +202,31 @@ btnCheckout.addEventListener("click", (e) => {
         }
     }
 
-    // Pour envoyer vers serveur POST
-    function post(url, sendOrder) {
-        return new Promise((resolve, reject) => {
-            let request = new XMLHttpRequest();
+    // Envoi des données à l'API
+
+    // Envoi des données au back (contact & products)
+    const products = []
+    
+    productTeddy.forEach((item) => {
+        products.push(item.id_product);
+    })
+  
+    let data = {
+        contact,
+        products,
+    }
+
+    // Pour envoyer les données au back
+     function post(url, data) { 
+        return new Promise((resolve, reject) => { 
+            let request = new XMLHttpRequest(); 
             request.open("POST", url);
-            request.setRequestHeader("content-type", "application/json");
-            request.send(JSON.stringify(sendOrder));
-            request.onreadystatechange = function () {
-                if (this.readyState === 4) {
+            request.setRequestHeader("content-type", "application/json"); 
+            request.send(JSON.stringify(data));
+            request.onreadystatechange = function() { 
+                if (this.readyState === 4) { 
                     if (this.status === 201) {
-                        resolve(JSON.parse(this.responseText));
+                        resolve(JSON.parse(this.responseText)); 
                     } else {
                         reject(request);
                     }
@@ -221,16 +234,14 @@ btnCheckout.addEventListener("click", (e) => {
             }
         })
     }
+    
+    post("http://localhost:3000/api/teddies/order", data)
+    .then(function(response){
+        let orderId = response.orderId;
+        localStorage.setItem("orderID", orderId);
+    })
 
-    const sendOrder = {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formulaireValues),
-    }
-
-// confirmation de la validation de la commande
+    // confirmation de la validation de la commande
 
     // controle de la validité du formulaire 
 
@@ -239,19 +250,18 @@ btnCheckout.addEventListener("click", (e) => {
             (window.confirm(`    Ton colis Teddy arrive bientôt chez toi.
     Confirme son paiement avec OK ou annule le avec ANNULER`)
             )) {
-            //------------- Envoi au back --------------
-            post("http://localhost:3000/api/teddies/order", sendOrder);
 
             // ------------ confirmer l'achat ------------
+
+            // redirection vers la page de confirmation
             window.location.href = "confirmation.html";
 
             // envoi dans le local storage des données du formulaire
-            localStorage.setItem("formulaireValues", JSON.stringify(formulaireValues));            
+            localStorage.setItem("contact", JSON.stringify(contact));
 
         } else {
             alert("Le formulaire n'est pas rempli correctement");
         }
     }
-
     formValidity();
 });

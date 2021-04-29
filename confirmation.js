@@ -1,5 +1,6 @@
 let cartItem = JSON.parse(localStorage.getItem("product"));
-let formulaireValues = JSON.parse(localStorage.getItem("formulaireValues"));
+let formulaireValues = JSON.parse(localStorage.getItem("contact"));
+let orderID = localStorage.getItem("orderID");
 
 const confirmation = document.querySelector(".confirmation");
 
@@ -8,7 +9,7 @@ const confirmation = document.querySelector(".confirmation");
 const confirmationDetails = `
     <div class="col-md-5 mt-3 confirmation-achat">
         <h3 class="text pt-4 nom-prenom">${formulaireValues.firstName} ${formulaireValues.lastName}</h3>
-        <h4 class="mt-5 theme-color mb-5">Merci pour ton adoption:<br> <p class="text-center">${formulaireValues.numeroCommande}</p></h4> 
+        <h4 class="mt-5 theme-color mb-5">Merci pour ton adoption:<br> <p class="text-center">${orderID}</p></h4> 
         <span class="theme-color">Voici un resumé pour être sûr que tout c'est bien passé </span>
         <div class="mb-3">
             <hr class="new1">
@@ -41,12 +42,12 @@ cartItem.forEach((item) => {
     `;
 });
 
+localStorage.clear();
+
 // Retour à l'accueil et suppression du panier
 const backIndex = document.querySelector("#retourAccueil");
 backIndex.addEventListener("click", (e) => {
     e.preventDefault();
-
-    localStorage.clear();
 
     window.location.href = "index.html";
 });
