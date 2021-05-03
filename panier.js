@@ -7,7 +7,7 @@ function renderComponentProduct() {
     // si le panier est vide
     if (productTeddy === null) {
         const containerBasketEmpty = `
-            <div class=" pt-2 pb-4 panier_vide">
+            <div class=" pt-2 pb-4 pl-3 pr-3 panier_vide">
                 <h2> Oh non, tu n'as choisi aucun Teddy </h2>
             </div>`;
         container.innerHTML = containerBasketEmpty;
@@ -84,12 +84,6 @@ const containerTotalPrice = `
 `;
 container.insertAdjacentHTML("afterend", containerTotalPrice);
 
-// Générer un numéro de commande aléatoire via uuid
-// function createUUID() {
-//     return ([1e7] + -1e3 + -4e3).replace(/[018]/g, c =>
-//         (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16))
-// }
-
 // Récuperation des données du formulaire pour local storage
 const btnCheckout = document.querySelector("#envoyer-formulaire");
 
@@ -105,7 +99,6 @@ btnCheckout.addEventListener("click", (e) => {
         country: document.querySelector("#pays").value,
         codePostal: document.querySelector("#code-postal").value,
         panierTotal: priceTotal,
-        // numeroCommande: createUUID(),
     }
 
     //---------------- Verifier que les valeurs du formulaire sont bonnes----------------
@@ -202,8 +195,7 @@ btnCheckout.addEventListener("click", (e) => {
         }
     }
 
-    // Envoi des données à l'API
-
+// Envoi des données à l'API
     // Envoi des données au back (contact & products)
     const products = []
     
@@ -217,7 +209,7 @@ btnCheckout.addEventListener("click", (e) => {
     }
 
     // Pour envoyer les données au back
-     function post(url, data) { 
+    function post(url, data) { 
         return new Promise((resolve, reject) => { 
             let request = new XMLHttpRequest(); 
             request.open("POST", url);
@@ -236,13 +228,12 @@ btnCheckout.addEventListener("click", (e) => {
     }
     
     post("http://localhost:3000/api/teddies/order", data)
-    .then(function(response){
-        let orderId = response.orderId;
-        localStorage.setItem("orderID", orderId);
-    })
+        .then((response) => {
+            let orderId = response.orderId;
+            localStorage.setItem("orderID", orderId);
+        })
 
-    // confirmation de la validation de la commande
-
+// confirmation de la validation de la commande
     // controle de la validité du formulaire 
 
     function formValidity() {
@@ -250,15 +241,11 @@ btnCheckout.addEventListener("click", (e) => {
             (window.confirm(`    Ton colis Teddy arrive bientôt chez toi.
     Confirme son paiement avec OK ou annule le avec ANNULER`)
             )) {
-
-            // ------------ confirmer l'achat ------------
-
             // redirection vers la page de confirmation
             window.location.href = "confirmation.html";
 
             // envoi dans le local storage des données du formulaire
             localStorage.setItem("contact", JSON.stringify(contact));
-
         } else {
             alert("Le formulaire n'est pas rempli correctement");
         }

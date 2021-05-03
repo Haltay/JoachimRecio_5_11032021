@@ -93,8 +93,7 @@ getTeddy((err, data) => {
                 couleur_background: choixColor,
             }
 
-            // ---------------------------LOCAL STORAGE-----------------------
-
+// ---------------------------LOCAL STORAGE-----------------------
             // Stocker la récuperation des valeurs dans le localStorage
             let cartItem = JSON.parse(localStorage.getItem("product"));
 

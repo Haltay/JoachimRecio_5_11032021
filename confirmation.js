@@ -28,10 +28,9 @@ const confirmationDetails = `
         </div>
 
         <div class="text-center mt-5 pb-4 "> <button class="btn btn-primary" id="retourAccueil">Revoir tous les Teddys</button> </div>
-    </div>`;
+</div>`;
 
 confirmation.innerHTML = confirmationDetails;
-
 
 // Affichage du nom du/des Teddy commandé(s)
 const displayName = document.querySelector(".nameTeddy");

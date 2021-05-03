@@ -180,6 +180,7 @@ footer a:hover {
 
 .panier_vide {
   font-size: large;
+  font-weight: bolder;
 }
 
 .global-list {
