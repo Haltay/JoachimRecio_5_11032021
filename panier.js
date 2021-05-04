@@ -125,7 +125,7 @@ btnCheckout.addEventListener("click", (e) => {
 
     function prenomControl() {
         // controle des données prénom
-        const lePrenom = contact.prenom;
+        const lePrenom = contact.firstName;
         if (regExPrenomNomVille(lePrenom)) {
             return true;
         } else {
@@ -137,7 +137,7 @@ btnCheckout.addEventListener("click", (e) => {
 
     function nomControl() {
         // controle des données nom
-        const leNom = contact.nom;
+        const leNom = contact.lastName;
         if (regExPrenomNomVille(leNom)) {
             return true;
         } else {
@@ -173,7 +173,7 @@ btnCheckout.addEventListener("click", (e) => {
 
     function AdresseControl() {
         // controle des données de l'adresse
-        const lAdresse = contact.adresse;
+        const lAdresse = contact.address;
         if (regExAdresse(lAdresse)) {
             return true;
         } else {
@@ -185,7 +185,7 @@ btnCheckout.addEventListener("click", (e) => {
 
     function villeControl() {
         // controle des données ville
-        const laVille = contact.ville;
+        const laVille = contact.city;
         if (regExPrenomNomVille(laVille)) {
             return true;
         } else {
