@@ -100,7 +100,7 @@ getTeddy((err, data) => {
             // Pop Up
             const confirmationPopup = () => {
                 if (window.confirm(`${data.name} arrive bientôt chez toi
-POur voir le panier c4est OK et pour revoir les Teddy c4est ANNULER`)) {
+Pour voir le panier c'est OK et pour revoir les Teddy c'est ANNULER`)) {
                     window.location.href = "panier.html";
                 } else {
                     window.location.href = "index.html";

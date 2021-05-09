@@ -41,13 +41,16 @@ window.addEventListener('load', (event) => {
 })
 
 // Suppression dans la panier d'un des Teddy non voulu
+
 function removeFromCart(item) {
     let productTeddy = JSON.parse(localStorage.getItem("product"));
-    productTeddy = productTeddy.filter(element => JSON.stringify(element) !== JSON.stringify(item));
+    const product = productTeddy.find(item => item.id_product == item)
+    const index = productTeddy.indexOf(item);
+    productTeddy.splice(index, 1);
     localStorage.setItem("product", JSON.stringify(productTeddy));
     alert("Ton Teddy est retourné à la boutique");
     window.location.href = "panier.html";
-}
+} 
 
 // bouton pour vider le panier
 const btn_delete_basket_html = `
@@ -237,7 +240,7 @@ btnCheckout.addEventListener("click", (e) => {
     // controle de la validité du formulaire 
 
     function formValidity() {
-        if (prenomControl() && nomControl() && codePostalControl() && EmailControl() && AdresseControl() && villeControl() &&
+        if (prenomControl() && nomControl() && codePostalControl() && EmailControl() && AdresseControl() && villeControl() && (localStorage.getItem("product") === null) &&
             (window.confirm(`    Ton colis Teddy arrive bientôt chez toi.
     Confirme son paiement avec OK ou annule le avec ANNULER`)
             )) {
@@ -247,7 +250,7 @@ btnCheckout.addEventListener("click", (e) => {
             // envoi dans le local storage des données du formulaire
             localStorage.setItem("contact", JSON.stringify(contact));
         } else {
-            alert("Le formulaire n'est pas rempli correctement");
+            alert("Aucun Teddy n'est commandé ou le formulaire n'est pas rempli correctement");
         }
     }
     formValidity();
