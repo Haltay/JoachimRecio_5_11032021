@@ -26,7 +26,7 @@ function renderComponentProduct() {
                     <div class="card-body panier-teddy-card">
                         <h4 class="card-title">Quantité 1 - ${item.nom} de couleur ${item.couleur}</h4>
                         <div class="card-text"> Pour seulement ${item.price / 100} € - 
-                            <button class="btn btn-primary btn-supprimer" onclick='removeFromCart(${JSON.stringify(item)})'> Supprimer ${item.nom} (${item.couleur}) </button> 
+                            <button class="btn btn-primary btn-supprimer" onclick="removeFromCart('${item.id_product}')"> Supprimer ${item.nom} (${item.couleur}) </button> 
                         </div>
                     </div>
                 </div>`;
@@ -41,11 +41,10 @@ window.addEventListener('load', (event) => {
 })
 
 // Suppression dans la panier d'un des Teddy non voulu
-
-function removeFromCart(item) {
+function removeFromCart(_id) {
     let productTeddy = JSON.parse(localStorage.getItem("product"));
-    const product = productTeddy.find(item => item.id_product == item)
-    const index = productTeddy.indexOf(item);
+    const product = productTeddy.find(product => product.id_product == _id)
+    const index = productTeddy.indexOf(product);
     productTeddy.splice(index, 1);
     localStorage.setItem("product", JSON.stringify(productTeddy));
     alert("Ton Teddy est retourné à la boutique");
