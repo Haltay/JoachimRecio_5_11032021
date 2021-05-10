@@ -198,6 +198,7 @@ btnCheckout.addEventListener("click", (e) => {
         }
     }
 
+  
 // Envoi des données à l'API
     // Envoi des données au back (contact & products)
     const products = []
@@ -240,7 +241,7 @@ btnCheckout.addEventListener("click", (e) => {
     // controle de la validité du formulaire 
 
     function formValidity() {
-        if (prenomControl() && nomControl() && codePostalControl() && EmailControl() && AdresseControl() && villeControl() && (localStorage.getItem("product") === null) &&
+        if (prenomControl() && nomControl() && codePostalControl() && EmailControl() && AdresseControl() && villeControl() && 
             (window.confirm(`    Ton colis Teddy arrive bientôt chez toi.
     Confirme son paiement avec OK ou annule le avec ANNULER`)
             )) {
@@ -250,8 +251,19 @@ btnCheckout.addEventListener("click", (e) => {
             // envoi dans le local storage des données du formulaire
             localStorage.setItem("contact", JSON.stringify(contact));
         } else {
-            alert("Aucun Teddy n'est commandé ou le formulaire n'est pas rempli correctement");
+            alert("Le formulaire n'est pas rempli correctement");
         }
     }
-    formValidity();
+
+    // controle si le panier est vide
+    function emptyBasket() {
+        if (localStorage.getItem('product') === "[]") {
+            alert("Il n'y a aucun Teddy dans le panier :(");
+            window.location.href = "index.html";
+        } else {
+            formValidity();
+        }
+    }
+
+    emptyBasket();
 });
