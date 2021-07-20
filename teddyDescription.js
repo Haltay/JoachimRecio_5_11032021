@@ -6,7 +6,7 @@ let idTeddy = params.get('id');
 const getTeddy = (callback) => {
 
     const request = new XMLHttpRequest();
-    request.open('GET', 'http://ab-p5-api.herokuapp.com/api/teddies/' + idTeddy);
+    request.open('GET', 'https://ab-p5-api.herokuapp.com/api/teddies/' + idTeddy);
     request.send();
 
     request.addEventListener('readystatechange', () => {

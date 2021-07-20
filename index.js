@@ -1,7 +1,7 @@
 //----------------- Appel à l'API -----------------
 const getTeddiesData = (callback) => {
     const request = new XMLHttpRequest();
-    request.open('GET', 'http://ab-p5-api.herokuapp.com/api/teddies');
+    request.open('GET', 'https://ab-p5-api.herokuapp.com/api/teddies');
     request.send();
     request.addEventListener('readystatechange', () => {
         if (request.readyState === 4 && request.status === 200) {
