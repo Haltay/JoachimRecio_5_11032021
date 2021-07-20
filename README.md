@@ -9,7 +9,7 @@ You don't need any installation, just click on "[Oniroco](https://haltay.github.
 
 ## Tasks
 
-    - use of HTML and CSS
+    - use of HTML, Javascript and CSS
     - Responsive website
 
 
